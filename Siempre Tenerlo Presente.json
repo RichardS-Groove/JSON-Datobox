@@ -1,0 +1,81 @@
+{
+    "name": "Titulo de Formulario",
+    "fullScreen": false,
+    "dateField": "TransDate",
+    "timeField": "TransTime",
+    "inherits": "Transaction",
+    "dashboard": true,
+    "new_button": false,
+    "syncDays": 5,
+    "icon": "fa-clipboard-list",
+    "bgcolor": "",
+    "textColor": "",
+    "location": {
+        "field": "Location",
+        "attachMap": true
+    },
+    "recordname": "Record",
+    "actions": [
+        "post",
+        "put",
+        "get"
+    ],
+    "fields": [{
+            "name": "Office",
+            "editor": "string",
+            "default": "dev.fields.Office",
+            "visible": false,
+            "readonly": "false",
+            "type": "field",
+            "label": {
+                "text": "Office"
+            }
+        },
+        {
+            "name": "Computer",
+            "default": "dev.fields.Computer",
+            "visible": false,
+            "readonly": false,
+            "type": "field",
+            "label": {
+                "text": "Computer"
+            }
+        },
+        {
+            "name": "Location",
+            "editor": "location",
+            "visible": false,
+            "type": "field",
+            "label": {
+                "text": "Location"
+            }
+        },
+        {
+            "name": "User",
+            "editor": "string",
+            "default": "dev.fields.User",
+            "visible": false,
+            "type": "field",
+            "label": {
+                "text": "User"
+            }
+        },
+        {
+            "name": "UserNameDatobox",
+            "editor": "string",
+            "label": {
+                "text": "Usuario Datobox"
+            },
+            "visible": false,
+            "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Name",
+            "readonly": "true",
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": ""
+        }
+    ],
+    "methods": {},
+    "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
+}
