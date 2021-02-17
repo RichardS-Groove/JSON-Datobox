@@ -68,6 +68,7 @@
             },
             "visible": false,
             "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Name",
+            "linkto": "User",
             "readonly": "true",
             "type": "field"
         },
