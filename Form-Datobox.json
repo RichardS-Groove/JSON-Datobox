@@ -93,12 +93,12 @@
         {
             "name": "User",
             "editor": "string",
-            "default": "dev.fields.User",
-            "visible": false,
-            "type": "field",
             "label": {
                 "text": "User"
-            }
+            },
+            "default": "dev.fields.User",
+            "visible": false,
+            "type": "field"
         },
         {
             "name": "UserNameDatobox",
