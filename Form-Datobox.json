@@ -20,26 +20,46 @@
         "put",
         "get"
     ],
-    "fields": [{
+    "fields": [
+        {
             "name": "Office",
             "editor": "string",
-            "default": "dev.fields.Office",
-            "visible": false,
-            "readonly": "false",
-            "type": "field",
             "label": {
                 "text": "Office"
-            }
+            },
+            "default": "dev.fields.Office",
+            "visible": false,
+            "type": "field"
         },
         {
             "name": "Computer",
-            "default": "dev.fields.Computer",
-            "visible": false,
-            "readonly": false,
-            "type": "field",
+            "editor": "string",
             "label": {
                 "text": "Computer"
-            }
+            },
+            "default": "dev.fields.Computer",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Department",
+            "editor": "string",
+            "label": {
+                "text": "Department"
+            },
+            "default": "dev.fields.Department",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Shift",
+            "editor": "string",
+            "label": {
+                "text": "Turno"
+            },
+            "visible": false,
+            "default": "dev.fields.Shift",
+            "type": "field"
         },
         {
             "name": "Location",
@@ -49,6 +69,26 @@
             "label": {
                 "text": "Location"
             }
+        },
+        {
+            "name": "TransDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('YYYY-MM-DD')",
+            "type": "field"
+        },
+        {
+            "name": "TransTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('HH:MM:SS')",
+            "type": "field"
         },
         {
             "name": "User",
