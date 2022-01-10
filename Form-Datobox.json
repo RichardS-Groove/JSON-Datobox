@@ -87,7 +87,7 @@
                 "text": "Hora de Transacción"
             },
             "visible": false,
-            "default": "moment().format('HH:MM:SS')",
+            "default": "moment().format('HH:mm:ss')",
             "type": "field"
         },
         {
