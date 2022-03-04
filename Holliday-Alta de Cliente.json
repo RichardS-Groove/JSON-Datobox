@@ -1,0 +1,243 @@
+{
+  "name": "Alta de Cliente",
+  "fullScreen": false,
+  "dateField": "TransDate",
+  "timeField": "TransTime",
+  "inherits": "Transaction",
+  "dashboard": true,
+  "new_button": false,
+  "icon": "fa-clipboard-list",
+  "bgcolor": "",
+  "textColor": "",
+  "location": {
+    "field": "Location",
+    "attachMap": true
+  },
+  "recordname": "Lead",
+  "actions": [
+    "post",
+    "put",
+    "get"
+  ],
+  "fields": [
+    {
+      "name": "Office",
+      "editor": "string",
+      "default": "dev.fields.Office",
+      "visible": false,
+      "readonly": "false",
+      "type": "field",
+      "label": {
+        "text": "Office"
+      }
+    },
+    {
+      "name": "Computer",
+      "default": "dev.fields.Computer",
+      "visible": false,
+      "readonly": false,
+      "type": "field",
+      "label": {
+        "text": "Computer"
+      }
+    },
+    {
+      "name": "Location",
+      "editor": "location",
+      "visible": false,
+      "type": "field",
+      "label": {
+        "text": "Location"
+      }
+    },
+    {
+      "name": "User",
+      "editor": "string",
+      "default": "dev.fields.User",
+      "visible": false,
+      "type": "field",
+      "label": {
+        "text": "User"
+      }
+    },
+    {
+      "name": "Status",
+      "editor": "integer",
+      "label": {
+        "text": "Flow Status"
+      },
+      "default": "rec.Status = 0",
+      "visible": false,
+      "type": "field"
+    },
+    {
+      "name": "Campaign",
+      "editor": "string",
+      "label": {
+        "text": "Campaña"
+      },
+      "visible": false,
+      "default": "rec.campaign = 'ClienteNuevoDesdeEquipoComercial'",
+      "type": "field"
+    },
+    {
+      "name": "UserNameDatobox",
+      "editor": "string",
+      "label": {
+        "text": "Usuario Datobox"
+      },
+      "visible": false,
+      "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Name",
+      "readonly": "true",
+      "type": "field"
+    },
+    {
+      "type": "title",
+      "label": "Alta de Cliente"
+    },
+    {
+      "name": "TransDate",
+      "editor": "date",
+      "label": {
+        "text": "Fecha"
+      },
+      "required": true,
+      "type": "field"
+    },
+    {
+      "name": "TransTime",
+      "editor": "time",
+      "label": {
+        "text": "Hora"
+      },
+      "visible": false,
+      "type": "field"
+    },
+    {
+      "name": "CustName",
+      "editor": "string",
+      "label": {
+        "text": "Razón Social"
+      },
+      "afterEdith": "rec.campaign = 'ClienteNuevoDesdeEquipoComercial'; rec.Status = 0",
+      "required": true,
+      "type": "field"
+    },
+    {
+      "name": "FantasyName",
+      "editor": "string",
+      "label": {
+        "text": "Nombre de Fantasia del Comercio"
+      },
+      "type": "field"
+    },
+    {
+      "name": "ContactName",
+      "editor": "string",
+      "label": {
+        "text": "Nombre y Apellido de la Persona que compra."
+      },
+      "type": "field"
+    },
+    {
+      "name": "TaxRegNr",
+      "editor": "integer",
+      "label": {
+        "text": "CUIT"
+      },
+      "type": "field"
+    },
+    {
+      "name": "Address",
+      "editor": "string",
+      "label": {
+        "text": "Dirección"
+      },
+      "type": "field"
+    },
+    {
+      "name": "LocationClient",
+      "editor": "string",
+      "label": {
+        "text": "Localidad"
+      },
+      "type": "field"
+    },
+    {
+      "name": "Province",
+      "editor": "string",
+      "label": {
+        "text": "Provincia"
+      },
+      "type": "field"
+    },
+    {
+      "name": "GEO_zip_code",
+      "editor": "string",
+      "label": {
+        "text": "Código Postal"
+      },
+      "type": "field"
+    },
+    {
+      "name": "Phone",
+      "editor": "integer",
+      "label": {
+        "text": "Teléfono"
+      },
+      "type": "field"
+    },
+    {
+      "name": "Mobile",
+      "editor": "integer",
+      "label": {
+        "text": "Celular"
+      },
+      "type": "field"
+    },
+    {
+      "name": "Email",
+      "editor": "string",
+      "label": {
+        "text": "Email de Contacto"
+      },
+      "type": "field"
+    },
+    {
+      "type": "title",
+      "label": "Especialidad / Intereses:"
+    }
+  ],
+  "reports": [
+    {
+      "label": "Reporte Alta de Cliente",
+      "name": "Reporte Alta de Cliente",
+      "filter": "async (rec) => {return rec.User == app.device.User  && (moment(rec.TransDate).isSame(moment(), 'month') || moment(rec.TransDate).isSame(moment().add(-1, 'month'), 'month')) } ",
+      "columns": [
+        {
+          "field": "TransDate",
+          "label": "Fecha de Carga"
+        },
+        {
+          "field": "CustName",
+          "label": "Razón Social"
+        },
+        {
+          "field": "FantasyName",
+          "label": "Nombre de Fantasia del Comercio"
+        },
+        {
+          "field": "ContactName",
+          "label": "Nombre y Apellido de la Persona que compra."
+        },
+        {
+          "field": "SerNr",
+          "label": "SerNr",
+          "click": "oppen.openWindow('LeadWindow', val)"
+        }
+      ]
+    }
+  ],
+  "methods": {},
+  "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
+}

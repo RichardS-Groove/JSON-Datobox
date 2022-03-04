@@ -1,0 +1,550 @@
+{
+  "name": "Transfer's",
+  "fullScreen": false,
+  "dateField": "TransDate",
+  "timeField": "Time",
+  "icon": "fa-clipboard-list",
+  "location": {
+    "field": "Location",
+    "attachMap": true
+  },
+  "dependencies": [
+    "PriceDeal",
+    "PriceList",
+    "Price"
+  ],
+  "recordname": "Transfer",
+  "actions": [
+    "post",
+    "put",
+    "get"
+  ],
+  "fields": [
+    {
+      "type": "title",
+      "label": "Datos del Cliente",
+      "description": ""
+    },
+    {
+      "name": "Computer",
+      "default": "dev.fields.Computer",
+      "visible": false,
+      "readonly": false,
+      "type": "field",
+      "label": {
+        "text": "Computer"
+      }
+    },
+    {
+      "name": "Shift",
+      "editor": "string",
+      "default": "dev.fields.Shift",
+      "visible": false,
+      "type": "field",
+      "label": {
+        "text": "Shift"
+      }
+    },
+    {
+      "name": "TransDate",
+      "label": {
+        "text": "Fecha de Visita"
+      },
+      "readonly": true,
+      "editor": "date",
+      "visible": true,
+      "type": "field"
+    },
+    {
+      "name": "User",
+      "editor": "string",
+      "default": "dev.fields.User",
+      "visible": true,
+      "readonly": true,
+      "type": "field",
+      "label": {
+        "text": "Usuario"
+      }
+    },
+    {
+      "name": "GoogleIdEmail",
+      "editor": "string",
+      "linkto": "User",
+      "label": {
+        "text": "GoogleIdEmail"
+      },
+      "visible": "false",
+      "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].GoogleIdEmail",
+      "type": "field"
+    },
+    {
+      "name": "SendMail",
+      "editor": "string",
+      "label": {
+        "text": "Send Mail"
+      },
+      "visible": "false",
+      "type": "field"
+    },
+    {
+      "name": "Currency",
+      "editor": "string",
+      "default": "'ARS'",
+      "visible": false,
+      "type": "field",
+      "label": {
+        "text": "Currency"
+      }
+    },
+    {
+      "name": "Office",
+      "editor": "string",
+      "default": "dev.fields.Office",
+      "visible": false,
+      "readonly": "false",
+      "type": "field",
+      "label": {
+        "text": "Office"
+      }
+    },
+    {
+      "name": "CustCode",
+      "required": true,
+      "editor": "string",
+      "afterEdit": "await pasteCustCode(); rec.SendMail = rec.GoogleIdEmail + ',' + rec.Email + ',' + 'Hola'",
+      "linkto": "Customer",
+      "label": {
+        "text": "Codigo del cliente"
+      },
+      "pasteview": {
+        "columns": [
+          "Code",
+          "Name"
+        ],
+        "pastefield": "Code"
+      },
+      "visible": true,
+      "type": "field"
+    },
+    {
+      "name": "CustName",
+      "editor": "string",
+      "visible": true,
+      "readonly": true,
+      "afterEdit": "await pasteCustCode()",
+      "linkto": "Customer",
+      "label": {
+        "text": "Nombre del Cliente"
+      },
+      "type": "field"
+    },
+    {
+      "name": "CustPhone",
+      "editor": "string",
+      "required": true,
+      "afterEdit": "await pasteCustCode()",
+      "readonly": true,
+      "linkto": "Customer",
+      "label": {
+        "text": "Telefono"
+      },
+      "type": "field"
+    },
+    {
+      "name": "Email",
+      "editor": "string",
+      "required": true,
+      "readonly": true,
+      "linkto": "Customer",
+      "afterEdit": "await pasteCustCode()",
+      "label": {
+        "text": "Correo"
+      },
+      "visible": true,
+      "type": "field"
+    },
+    {
+      "name": "CustAddress",
+      "linkto": "Customer",
+      "afterEdit": "await pasteCustCode()",
+      "readonly": true,
+      "label": {
+        "text": "Direccion"
+      },
+      "editor": "string",
+      "visible": true,
+      "type": "field"
+    },
+    {
+      "name": "SalesMan",
+      "editor": "string",
+      "afterEdit": "await pasteCustCode()",
+      "label": {
+        "text": "Vendedor"
+      },
+      "linkto": "Customer",
+      "visible": true,
+      "requerid": true,
+      "readonly": "true",
+      "type": "field"
+    },
+    {
+      "name": "CustCity",
+      "editor": "string",
+      "readonly": true,
+      "visible": true,
+      "linkto": "Customer",
+      "label": {
+        "text": "Ciudad"
+      },
+      "type": "field"
+    },
+    {
+      "name": "PriceDeal",
+      "editor": "string",
+      "readonly": true,
+      "linkto": "PriceDeal",
+      "visible": false,
+      "label": {
+        "text": "Acuerdo de Precios"
+      },
+      "type": "field"
+    },
+    {
+      "name": "PayTerm",
+      "editor": "string",
+      "readonly": true,
+      "linkto": "PriceDeal",
+      "visible": false,
+      "label": {
+        "text": "Termino de Pago"
+      },
+      "type": "field"
+    },
+    {
+      "name": "Comment",
+      "editor": "memo",
+      "readonly": false,
+      "label": {
+        "text": "Comentarios"
+      },
+      "type": "field"
+    },
+    {
+      "name": "TItulo2",
+      "type": "title",
+      "label": "Distribuidor"
+    },
+    {
+      "name": "DistributorCode",
+      "label": {
+        "text": "Distribuidor"
+      },
+      "editor": "string",
+      "linkto": "Customer",
+      "requerid": true,
+      "visible": true,
+      "readonly": false,
+      "afterEdit": "await pasteCustCodeTo()",
+      "pasteview": {
+        "columns": [
+          "Code",
+          "Name"
+        ],
+        "filter": "(r) => {return r.GroupCode == 'DIST'}",
+        "pastefield": "Code"
+      },
+      "type": "field"
+    },
+    {
+      "name": "DistributorName",
+      "editor": "string",
+      "label": {
+        "text": "Nombre"
+      },
+      "linkto": "Customer",
+      "visible": true,
+      "readonly": true,
+      "type": "field"
+    },
+    {
+      "name": "DistributorAddress",
+      "editor": "string",
+      "label": {
+        "text": "Direccion"
+      },
+      "linkto": "Customer",
+      "visible": false,
+      "readonly": true,
+      "type": "field"
+    },
+    {
+      "name": "DistributorCity",
+      "editor": "string",
+      "label": {
+        "text": "Ciudad"
+      },
+      "linkto": "Customer",
+      "visible": false,
+      "readonly": true,
+      "type": "field"
+    },
+    {
+      "name": "DistributorPhone",
+      "editor": "string",
+      "label": {
+        "text": "Telefono"
+      },
+      "linkto": "Customer",
+      "visible": false,
+      "readonly": true,
+      "type": "field"
+    },
+    {
+      "name": "CurrencyRate",
+      "editor": "string",
+      "readonly": "true",
+      "label": {
+        "text": "T.C. Moneda"
+      },
+      "visible": "false",
+      "default": "1.00",
+      "type": "field"
+    },
+    {
+      "name": "BaseRate",
+      "editor": "string",
+      "readonly": "true",
+      "label": {
+        "text": "T.C. entre Bases"
+      },
+      "visible": "false",
+      "default": "1.00",
+      "type": "field"
+    },
+    {
+      "name": "EstPayDate",
+      "editor": "date",
+      "label": {
+        "text": "Fecha Est. de Pago"
+      },
+      "default": "rec.EstPayDate = rec.TransDate",
+      "visible": "false",
+      "readonly": true,
+      "type": "field"
+    },
+    {
+      "name": "VoucherCode",
+      "editor": "string",
+      "label": {
+        "text": "Código de Comprobante"
+      },
+      "visible": "false",
+      "default": "001",
+      "readonly": true,
+      "type": "field"
+    },
+    {
+      "name": "TItulo3",
+      "type": "title",
+      "label": "Productos"
+    },
+    {
+      "name": "PasteCombo",
+      "editor": "string",
+      "label": {
+        "text": "Agregar Combo"
+      },
+      "pasteview": {
+        "columns": [
+          "Code",
+          "Comment"
+        ],
+        "pastefield": "Code"
+      },
+      "linkto": "PromotionPlanCombo",
+      "afterEdit": "await pasteCombo(rec, rec.PasteCombo); rec.PasteCombo = null;",
+      "type": "field"
+    },
+    {
+      "name": "Items",
+      "editor": "detail",
+      "display": {
+        "matrix": [
+          "Nr",
+          "ArtName",
+          "Qty",
+          "Labels",
+          "Price",
+          "RowTotal"
+        ]
+      },
+      "mobile": true,
+      "required": true,
+      "label": {
+        "text": "Detalles de Productos"
+      },
+      "afterDeleteRow": "await sumUp()",
+      "canInsertRow": true,
+      "fields": [
+        {
+          "name": "Nr",
+          "editor": "integer",
+          "label": {
+            "text": "Nr"
+          },
+          "readonly": true,
+          "type": "field"
+        },
+        {
+          "name": "ArtCode",
+          "label": {
+            "text": "Articulo"
+          },
+          "editor": "string",
+          "required": true,
+          "readonly": false,
+          "linkto": "Item",
+          "pasteview": {
+            "columns": [
+              "Code",
+              "Name"
+            ],
+            "filter": "(rw) => {return (rw.ItemGroup == 'A01' || rw.ItemGroup == 'A02') && !rw.Closed} ",
+            "pastefield": "Code"
+          },
+          "afterEdit": "i = await cm.Item.bring(val); row.ArtName = i.Name ; await pasteArtCode(row) ; await sumUp()",
+          "type": "field"
+        },
+        {
+          "name": "ArtName",
+          "editor": "string",
+          "label": {
+            "text": "Nombre Art."
+          },
+          "linkto": "Item",
+          "visible": true,
+          "readonly": true,
+          "type": "field"
+        },
+        {
+          "name": "Labels",
+          "label": {
+            "text": "Clasificación"
+          },
+          "editor": "string",
+          "required": true,
+          "afterEdit": "await updatePrice(row, rec); await rowSumUp(row)",
+          "readonly": false,
+          "linkto": "Label",
+          "pasteview": {
+            "columns": [
+              "Code",
+              "Name"
+            ],
+            "filter": "(r) => {return (r.Code == 'U' || r.Code == 'B' || r.Code == 'O')} "
+          },
+          "type": "field"
+        },
+        {
+          "name": "Qty",
+          "label": {
+            "text": "Cantidad"
+          },
+          "editor": "value",
+          "afterEdit": "rowSumUp(row)",
+          "readonly": false,
+          "required": true,
+          "type": "field"
+        },
+        {
+          "name": "Price",
+          "editor": "value",
+          "afterEdit": "rowSumUp(row); await sumUpRow(row)",
+          "required": true,
+          "readonly": true,
+          "label": {
+            "text": "Precio"
+          },
+          "type": "field"
+        },
+        {
+          "name": "RowTotal",
+          "visible": false,
+          "readonly": true,
+          "label": {
+            "text": "Total x Fila"
+          },
+          "editor": "value",
+          "type": "field"
+        }
+      ],
+      "type": "field"
+    },
+    {
+      "name": "Total",
+      "editor": "integer",
+      "label": {
+        "text": "Total:"
+      },
+      "readonly": true,
+      "type": "field"
+    },
+    {
+      "type": "button",
+      "label": {
+        "text": "Nuevo SIN CARGO"
+      },
+      "click": "(async () => {let lastrow = rec.Items.length ? rec.Items[rec.Items.length-1] : null; let rw = cm.TransferItemRow.new(); rw.ArtCode = lastrow ? lastrow.ArtCode : null; rw.ArtName = lastrow ? lastrow.ArtName : ''; rw.Labels = 'B'; rw.Qty = lastrow ? lastrow.Qty : null; rw.Price = 0; rw.RowTotal = 0; rec.Items.push(rw); editDetailRow('Items', rw.ArtCode ? 'Qty' : 'ArtCode' , rec.Items.length-1)})()"
+    },
+    {
+      "type": "button",
+      "label": {
+        "text": "Nuevo OBSEQUIO"
+      },
+      "click": "(async () => {let lastrow = rec.Items.length ? rec.Items[rec.Items.length-1] : null; let rw = cm.TransferItemRow.new(); rw.ArtCode = lastrow ? lastrow.ArtCode : null; rw.ArtName = lastrow ? lastrow.ArtName : ''; rw.Labels = 'O'; rw.Qty = lastrow ? lastrow.Qty : null; rw.Price = 0; rw.RowTotal = 0; rec.Items.push(rw); editDetailRow('Items', rw.ArtCode ? 'Qty' : 'ArtCode' , rec.Items.length-1)})()"
+    },
+    {
+      "type": "title"
+    }
+  ],
+  "reports": [
+    {
+      "label": "Reporte Transfer",
+      "name": "Reporte Transfer",
+      "filter": "async (rec) => {return rec.User == app.device.User  && (moment(rec.TransDate).isSame(moment(), 'month') || moment(rec.TransDate).isSame(moment().add(-1, 'month'), 'month')) } ",
+      "columns": [
+        {
+          "field": "TransDate",
+          "label": "Fecha de Carga"
+        },
+        {
+          "field": "CustName",
+          "label": "Cliente"
+        },
+        {
+          "field": "DistributorName",
+          "label": "Distribuidor"
+        },
+        {
+          "field": "SerNr",
+          "label": "SerNr",
+          "click": "oppen.openWindow('TransferWindow', val)"
+        }
+      ]
+    }
+  ],
+  "methods": {
+    "rowSumUp": "async (row) => { row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.Qty * row.Price ; row.Nr = this.rec.Items.length ; await this.sumQtyTotal() ; await this.sumUp()}",
+    "sumUp": "async () => {let total = 0 ; total = this.rec.Items.map( i => i.Qty * i.Price) ; this.rec.Total = total.reduce((a, b) => a + b, 0).toFixed(2); this.rec.TotalQty = parseInt(this.rec.Items.map(r => parseInt(r.Qty)).reduce( (a,b) => a + b , 0));} ",
+    "sumUpRow": "async () => {this.rec.Total = 0; for (let row of this.rec.Items) {this.rec.Total += parseInt(row.RowTotal || 0 ).toFixed(2)}}",
+    "pasteArtCode": "async (row) => {if (!row.Labels) row.Labels = 'U'; await this.updatePrice(row, this.rec); await this.rowSumUp(row)}",
+    "pasteCustCode": "async () => { let customer = await cm.Customer.bring(this.rec.CustCode); if (customer) { this.rec.CustName = customer.Name ; this.rec.CustPhone = customer.Phone ; this.rec.Email = customer.Email ; this.rec.CustAddress = customer.Address ; this.rec.PriceDeal = customer.PriceDeal ; this.rec.PayTerm = customer.PayTerm ; this.rec.SalesMan = customer.CustCodeAsigned ; this.rec.CustCity = customer.City; await this.sumUp()} }",
+    "pasteCustCodeTo": "async () => { let customerr = (await cm.Customer.bring(this.rec.DistributorCode)) ; this.rec.DistributorName = customerr.Name ; this.rec.DistributorAddress = customerr.Address ; this.rec.DistributorCity = customerr.City ; this.rec.DistributorPhone = customerr.Phone } ",
+    "sumQtyTotal": "async () => {this.rec.TotalQty = 0 ; this.rec.Items.forEach(r => this.rec.TotalQty += parseInt(r.Qty))} ",
+    "updatePrice": "async (row, rec) => {console.log('aa2'); let prices = await cm.Price.getPrice(row.ArtCode, 1, rec.PriceDeal, moment()); row.Price = (row.Labels == 'B' || row.Labels == 'O')? 0 : prices[0]}",
+    "pasteCombo": "async (rec,combo) => {let c = await cm.PromotionPlanCombo.bring(combo); if (!c) return; let crow = cm.ComboRow.new(); crow.Code = c.Code; rec.Combos.push(crow); for (let irow of c.Items) { let row = cm.TransferItemRow.new(); rec.Items.push(row); row.ArtCode = irow.ArtCode; row.ArtName = irow.Name, await this.pasteArtCode(row); row.Labels = irow.Labels; row.Qty = irow.Qty; await this.rowSumUp(row)}}",
+    "beforeSaveRecord": "(draft) => {return draft || rec.Items.length? true : 'Debes ingresar al menos 1 Item'}"
+  },
+  "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
+}
