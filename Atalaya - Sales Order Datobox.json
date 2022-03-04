@@ -1,0 +1,733 @@
+{
+    "name": "Sales Order Datobox",
+    "fullScreen": false,
+    "dateField": "TransDate",
+    "timeField": "TransTime",
+    "inherits": "Transaction",
+    "dashboard": true,
+    "new_button": false,
+    "syncDays": 5,
+    "icon": "fa-clipboard-list",
+    "bgcolor": "",
+    "textColor": "",
+    "location": {
+        "field": "Location",
+        "attachMap": true
+    },
+    "dependencies": [
+        "PriceDeal",
+        "PriceList",
+        "Price"
+    ],
+    "recordname": "SalesOrder",
+    "actions": [
+        "post",
+        "put",
+        "get"
+    ],
+    "fields": [
+        {
+            "name": "SalesSettings",
+            "editor": "string",
+            "label": {
+                "text": "Sales Settings"
+            },
+            "visible": false,
+            "linkto": "SalesSettings",
+            "type": "field"
+        },
+        {
+            "name": "DefaultCurrency",
+            "editor": "string",
+            "label": {
+                "text": "Default Currency"
+            },
+            "visible": false,
+            "linkto": "DefaultCurrency",
+            "type": "field"
+        },
+        {
+            "name": "Office",
+            "editor": "string",
+            "label": {
+                "text": "Office"
+            },
+            "default": "dev.fields.Office",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Computer",
+            "editor": "string",
+            "label": {
+                "text": "Computer"
+            },
+            "default": "dev.fields.Computer",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Department",
+            "editor": "string",
+            "label": {
+                "text": "Department"
+            },
+            "default": "dev.fields.Department",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Shift",
+            "editor": "string",
+            "label": {
+                "text": "Turno"
+            },
+            "visible": false,
+            "default": "dev.fields.Shift",
+            "type": "field"
+        },
+        {
+            "name": "Location",
+            "editor": "location",
+            "visible": false,
+            "type": "field",
+            "label": {
+                "text": "Location"
+            }
+        },
+        {
+            "name": "TransDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('YYYY-MM-DD')",
+            "type": "field"
+        },
+        {
+            "name": "TransTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('HH:mm:ss')",
+            "type": "field"
+        },
+        {
+            "name": "User",
+            "editor": "string",
+            "label": {
+                "text": "User"
+            },
+            "default": "dev.fields.User",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "UserNameDatobox",
+            "editor": "string",
+            "label": {
+                "text": "Usuario Datobox"
+            },
+            "visible": false,
+            "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Name",
+            "linkto": "User",
+            "readonly": "true",
+            "type": "field"
+        },
+        {
+            "name": "PriceDeal",
+            "editor": "string",
+            "readonly": true,
+            "linkto": "PriceDeal",
+            "visible": false,
+            "label": {
+                "text": "Acuerdo de Precios"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Sales Order"
+        },
+        {
+            "name": "CustCode",
+            "visible": false,
+            "editor": "string",
+            "linkto": "Customer",
+            "label": {
+                "text": "Código de Cliente"
+            },
+            "pasteview": {
+                "columns": [
+                    "Name",
+                    "LastName"
+                ],
+                "pastefield": "Code"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "CustName",
+            "editor": "string",
+            "label": {
+                "text": "Cliente"
+            },
+            "linkto": "Customer",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "required": true,
+            "afterEdit": "rec.CustCode = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Code ; rec.PayTerm = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].PayTerm ; rec.Currency = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Currency ;  rec.PriceDeal = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].PriceDeal",
+            "type": "field"
+        },
+        {
+            "name": "PayTerm",
+            "editor": "string",
+            "label": {
+                "text": "Término de Pago"
+            },
+            "required": true,
+            "visible": false,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "Currency",
+            "editor": "string",
+            "label": {
+                "text": "Moneda"
+            },
+            "required": true,
+            "visible": false,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "CurrencyRate",
+            "editor": "number",
+            "label": {
+                "text": "Tipo de Cambio"
+            },
+            "required": true,
+            "visible": false,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "BaseRate",
+            "editor": "number",
+            "label": {
+                "text": "Tipo de Cambio Base"
+            },
+            "required": true,
+            "visible": false,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "DeliveryDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha de Entrega"
+            },
+            "required": true,
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "MorningPoint",
+            "editor": "string",
+            "label": {
+                "text": "Cod. Punto de Amarre"
+            },
+            "linkto": "MorningPoint",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameMorningPoint",
+            "editor": "string",
+            "label": {
+                "text": "Punto de Amarre"
+            },
+            "linkto": "MorningPoint",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "required": true,
+            "afterEdit": "rec.MorningPoint = (await cm.MorningPoint.getAll()).filter((r) => r.Name === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "InternalOrigin",
+            "editor": "string",
+            "label": {
+                "text": "Cod. Origen"
+            },
+            "linkto": "Locality",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Description"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameInternalOrigin",
+            "editor": "string",
+            "label": {
+                "text": "Origen"
+            },
+            "linkto": "Locality",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Description"
+                ],
+                "pastefield": "Description"
+            },
+            "required": true,
+            "afterEdit": "rec.InternalOrigin = (await cm.Locality.getAll()).filter((r) => r.Description === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "InternalDestiny",
+            "editor": "string",
+            "label": {
+                "text": "Cod. Destino"
+            },
+            "linkto": "Locality",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Description"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameInternalDestiny",
+            "editor": "string",
+            "label": {
+                "text": "Destino"
+            },
+            "linkto": "Locality",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Description"
+                ],
+                "pastefield": "Description"
+            },
+            "required": true,
+            "afterEdit": "rec.InternalDestiny = (await cm.Locality.getAll()).filter((r) => r.Description === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "DxTrailer",
+            "editor": "string",
+            "label": {
+                "text": "Cod Remolcador"
+            },
+            "linkto": "Trailer",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameDxTrailer",
+            "editor": "string",
+            "label": {
+                "text": "Remolcador"
+            },
+            "linkto": "Trailer",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "required": true,
+            "afterEdit": "rec.DxTrailer = (await cm.Trailer.getAll()).filter((r) => r.Name === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "Enrollment",
+            "editor": "string",
+            "label": {
+                "text": "Cod. Matricula"
+            },
+            "linkto": "Enrollment",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameEnrollment",
+            "editor": "string",
+            "label": {
+                "text": "Matricula"
+            },
+            "linkto": "Enrollment",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "required": true,
+            "afterEdit": "rec.Enrollment = (await cm.Enrollment.getAll()).filter((r) => r.Name === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "Barges",
+            "editor": "string",
+            "label": {
+                "text": "Cod. Barcazas"
+            },
+            "linkto": "Barges",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameBarges",
+            "editor": "string",
+            "label": {
+                "text": "Barcazas"
+            },
+            "linkto": "Barges",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "required": true,
+            "afterEdit": "rec.Barges = (await cm.Barges.getAll()).filter((r) => r.Name === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "Flag",
+            "editor": "string",
+            "label": {
+                "text": "Cod. Bandera"
+            },
+            "linkto": "Country",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameFlag",
+            "editor": "string",
+            "label": {
+                "text": "Bandera"
+            },
+            "linkto": "Country",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "required": true,
+            "afterEdit": "rec.Flag = (await cm.Country.getAll()).filter((r) => r.Name === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "TypeLoad",
+            "editor": "string",
+            "label": {
+                "text": "Cod. Tipo de Carga"
+            },
+            "linkto": "TypeLoad",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "visible": false,
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "NameTypeLoad",
+            "editor": "string",
+            "label": {
+                "text": "Tipo de Carga"
+            },
+            "linkto": "TypeLoad",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "required": true,
+            "afterEdit": "rec.TypeLoad = (await cm.TypeLoad.getAll()).filter((r) => r.Name === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Amarre"
+        },
+        {
+            "name": "TiedUpDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Amarre"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "TiedUpTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora Amarre"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Zarpó"
+        },
+        {
+            "name": "SetSailDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Zarpó"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "SetSailTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora Zarpó"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Selección"
+        },
+        {
+            "name": "DxDivision",
+            "editor": "checkbox",
+            "label": {
+                "text": "División"
+            },
+            "afterEdit": "",
+            "type": "field"
+        },
+        {
+            "name": "DxTransit",
+            "editor": "checkbox",
+            "label": {
+                "text": "Transito"
+            },
+            "type": "field"
+        },
+        {
+            "name": "WithSerene",
+            "editor": "checkbox",
+            "label": {
+                "text": "Con Serene"
+            },
+            "type": "field"
+        },
+        {
+            "name": "WithTrailer",
+            "editor": "checkbox",
+            "label": {
+                "text": "Con Remolcador"
+            },
+            "type": "field"
+        },
+        {
+            "name": "Items",
+            "editor": "detail",
+            "visible": false,
+            "label": {
+                "text": "Art. IVA Excl."
+            },
+            "canInsertRow": true,
+            "fields": [
+                {
+                    "name": "ArtCode",
+                    "editor": "string",
+                    "label": {
+                        "text": "ArtCode"
+                    },
+                    "afterEdit": "await updatePrice(row, rec)",
+                    "type": "field"
+                },
+                {
+                    "name": "Name",
+                    "editor": "string",
+                    "readonly": true,
+                    "label": {
+                        "text": "Name"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Qty",
+                    "editor": "value",
+                    "label": {
+                        "text": "Cantidad"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Unit",
+                    "editor": "string",
+                    "label": {
+                        "text": "Unidad"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "VATPrice",
+                    "editor": "value",
+                    "label": {
+                        "text": "Vat Precio"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Price",
+                    "editor": "value",
+                    "label": {
+                        "text": "Precio"
+                    },
+                    "afterEdit": "await sumUpRow(row)",
+                    "type": "field"
+                },
+                {
+                    "name": "RowTotal",
+                    "editor": "value",
+                    "label": {
+                        "text": "Total"
+                    },
+                    "afterEdit": "await sumUpRow(row)",
+                    "type": "field"
+                },
+                {
+                    "name": "RowNet",
+                    "editor": "value",
+                    "label": {
+                        "text": "Neto"
+                    },
+                    "type": "field"
+                }
+            ],
+            "type": "field"
+        },
+        {
+            "name": "SubTotal",
+            "editor": "value",
+            "label": {
+                "text": "SubTotal"
+            },
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Total",
+            "editor": "value",
+            "label": {
+                "text": "Total"
+            },
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "type": "title"
+        }
+    ],
+    "methods": {
+        "sumUpRow": "async () => {this.rec.Total = 0; for (let row of this.rec.Items) {this.rec.Total += parseInt(row.RowTotal || 0 )}}",
+        "updatePrice": "async (row, rec) => {console.log('asd') ; let prices = await cm.Price.getPrice(row.ArtCode, 1, rec.PriceDeal, moment()); row.VATPrice = prices[0]; row.Price = prices[0]; row.RowTotal = prices[0]; await this.sumUpRow(row) ;  this.rec.SubTotal = this.rec.Total}",
+        "afterShowRecord": "async (rec) => {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm ; rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD') ; }",
+        "beforeSaveRecord": "async (draft, rec) => {if(!rec.DxDivision && !rec.DxTransit && !rec.WithSerene && !rec.WithTrailer){return draft || rec.Items.length? true : 'Completar la sección de Selección'}; if(!rec.PayTerm) {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm} ; if(!rec.Currency) {rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency} ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD'); if(rec.DxDivision) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00253'; row.Name = 'Servicio de amarre por barcaza'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.DxTransit) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00255'; row.Name = 'Transito'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithSerene) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00257'; row.Name = 'Sereno'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithTrailer) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00251'; row.Name = 'Remolcador de custodia'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)};  return true}"
+    },
+    "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
+}
