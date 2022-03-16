@@ -1,0 +1,61 @@
+const oo = require("openorange");
+const cm = oo.classmanager;
+//const moment = require("moment");
+
+let Description = {
+    filename: __filename,
+    name: "VisitReport",
+    title: "Listado de Visitas",
+    inherits: "GenericListReport",
+};
+
+const Parent = cm.SuperClass(Description);
+class VisitReport extends Parent {
+    async defaults() {
+        await super.defaults(this);
+    }
+
+    getListRecordClass() {
+        return cm.Visit;
+    }
+
+    getLabelsWindowClass() {
+        return cm.VisitWindow;
+    }
+
+    // Son los filtros
+    getImportantFields() {
+        return ["SerNr", "Date", "User", "CustCode", "WayBill", "Currency", "Status"];
+    }
+
+    // Columnas a mostrar de la cabecera
+    getInitialColumns() {
+        return ["SerNr", "Date", "User", "UserNameDatobox", "CustCode", "CustName", "WayBill", "DeliveryNr", "RefStr" , "Status"];
+    }
+
+    getExtraTables() {
+        //el "externalField"  es el campo codigo de la nueva tabla, por ejemplo,
+        // para agregar la tabla Customer hacia Invoice, se hace internalField: "CustCode", externalField: "Code"
+        // internalField hace referencia al campo interno que contiene el código de la tabla.
+        // externalField hace referencia al campo externo que contiene el código de la tabla, en esté caso Code hace referencia a la tabla User. 
+        return {
+            User: {
+                internalField: "User", externalField: "Code"
+            },
+        };
+    }
+
+    getSelect() {
+        let select = super.getSelect();
+        select.push('User.Name as UserNameDatobox');
+        return select;
+    }
+
+
+    getAdditionalColumns() {
+        let columns = super.getAdditionalColumns();
+        columns = columns.concat(['UserNameDatobox']);
+        return columns;
+    }
+}
+module.exports = VisitReport.initClass(Description);
