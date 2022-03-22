@@ -1,0 +1,517 @@
+{
+    "name": "Sales Order Datobox",
+    "fullScreen": false,
+    "dateField": "TransDate",
+    "timeField": "TransTime",
+    "inherits": "Transaction",
+    "dashboard": true,
+    "new_button": false,
+    "syncDays": 5,
+    "icon": "fa-clipboard-list",
+    "bgcolor": "",
+    "textColor": "",
+    "location": {
+        "field": "Location",
+        "attachMap": true
+    },
+    "recordname": "SalesOrder",
+    "actions": [
+        "post",
+        "put",
+        "get"
+    ],
+    "fields": [
+        {
+            "name": "SalesSettings",
+            "editor": "string",
+            "label": {
+                "text": "Sales Settings"
+            },
+            "visible": false,
+            "linkto": "SalesSettings",
+            "type": "field"
+        },
+        {
+            "name": "DefaultCurrency",
+            "editor": "string",
+            "label": {
+                "text": "Default Currency"
+            },
+            "visible": false,
+            "linkto": "DefaultCurrency",
+            "type": "field"
+        },
+        {
+            "name": "Office",
+            "editor": "string",
+            "label": {
+                "text": "Office"
+            },
+            "default": "dev.fields.Office",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Computer",
+            "editor": "string",
+            "label": {
+                "text": "Computer"
+            },
+            "default": "dev.fields.Computer",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Department",
+            "editor": "string",
+            "label": {
+                "text": "Department"
+            },
+            "default": "dev.fields.Department",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Shift",
+            "editor": "string",
+            "label": {
+                "text": "Turno"
+            },
+            "visible": false,
+            "default": "dev.fields.Shift",
+            "type": "field"
+        },
+        {
+            "name": "Location",
+            "editor": "location",
+            "visible": false,
+            "type": "field",
+            "label": {
+                "text": "Location"
+            }
+        },
+        {
+            "name": "TransDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('YYYY-MM-DD')",
+            "type": "field"
+        },
+        {
+            "name": "TransTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('HH:mm:ss')",
+            "type": "field"
+        },
+        {
+            "name": "User",
+            "editor": "string",
+            "label": {
+                "text": "User"
+            },
+            "default": "dev.fields.User",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "UserNameDatobox",
+            "editor": "string",
+            "label": {
+                "text": "Usuario Datobox"
+            },
+            "visible": false,
+            "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Name",
+            "linkto": "User",
+            "readonly": "true",
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Sales Order"
+        },
+        {
+            "name": "CustCode",
+            "visible": false,
+            "editor": "string",
+            "linkto": "Customer",
+            "label": {
+                "text": "Código de Cliente"
+            },
+            "pasteview": {
+                "columns": [
+                    "Name",
+                    "LastName"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "CustName",
+            "editor": "string",
+            "label": {
+                "text": "Cliente"
+            },
+            "linkto": "Customer",
+            "readonly": false,
+            "required": true,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "afterEdit": "rec.CustCode = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Code ; rec.PayTerm = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].PayTerm ; rec.Currency = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Currency",
+            "type": "field"
+        },
+        {
+            "name": "PayTerm",
+            "editor": "string",
+            "label": {
+                "text": "Término de Pago"
+            },
+            "visible": false,
+            "required": true,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "Currency",
+            "editor": "string",
+            "label": {
+                "text": "Moneda"
+            },
+            "visible": false,
+            "required": true,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "CurrencyRate",
+            "editor": "number",
+            "label": {
+                "text": "Tipo de Cambio"
+            },
+            "visible": false,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "BaseRate",
+            "editor": "number",
+            "label": {
+                "text": "Tipo de Cambio Base"
+            },
+            "visible": false,
+            "readonly": true,
+            "type": "field"
+        },
+        {
+            "name": "DeliveryDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha de Entrega"
+            },
+            "required": true,
+            "visble": false,
+            "type": "field"
+        },
+        {
+            "name": "MorningPoint",
+            "editor": "string",
+            "label": {
+                "text": "Punto de Amarre"
+            },
+            "required": true,
+            "linkto": "MorningPoint",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "InternalOrigin",
+            "editor": "string",
+            "label": {
+                "text": "Origen"
+            },
+            "required": true,
+            "linkto": "Locality",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Description"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "InternalDestiny",
+            "editor": "string",
+            "label": {
+                "text": "Destino"
+            },
+            "required": true,
+            "linkto": "Locality",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Description"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "Trailer",
+            "editor": "string",
+            "label": {
+                "text": "Remolcador"
+            },
+            "required": true,
+            "linkto": "Trailer",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "Enrollment",
+            "editor": "string",
+            "label": {
+                "text": "Matricula"
+            },
+            "required": true,
+            "linkto": "Enrollment",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "Barges",
+            "editor": "string",
+            "label": {
+                "text": "Barcazas"
+            },
+            "required": true,
+            "linkto": "Barges",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "Flag",
+            "editor": "string",
+            "label": {
+                "text": "Bandera"
+            },
+            "required": true,
+            "linkto": "Country",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "name": "TypeLoad",
+            "editor": "string",
+            "label": {
+                "text": "Tipo de Carga"
+            },
+            "required": true,
+            "linkto": "TypeLoad",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Code"
+            },
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Amarre"
+        },
+        {
+            "name": "TiedUpDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Amarre"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "TiedUpTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora Amarre"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Zarpó"
+        },
+        {
+            "name": "SetSailDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Zarpó"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "SetSailTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora Zarpó"
+            },
+            "required": true,
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Selección"
+        },
+        {
+            "name": "Division",
+            "editor": "checkbox",
+            "label": {
+                "text": "División"
+            },
+            "afterEdit": "if(rec.Division) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '30001'; row.Name = 'Datobox Software as a Service'; row.Qty = 0 ; row.Unit = 'UNI'; row.Price = 0; row.Discount = 0 ;rec.Items.push(row);} else {rec.Items.pop()}",
+            "type": "field"
+        },
+        {
+            "name": "Transit",
+            "editor": "checkbox",
+            "label": {
+                "text": "Transito"
+            },
+            "afterEdit": "if(rec.Transit) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '30001'; row.Name = 'Datobox Software as a Service'; row.Qty = 0 ; row.Unit = 'UNI'; row.Price = 0; row.Discount = 0 ;rec.Items.push(row);} else {rec.Items.pop()}",
+            "type": "field"
+        },
+        {
+            "name": "WithSerene",
+            "editor": "checkbox",
+            "label": {
+                "text": "Con Serene"
+            },
+            "afterEdit": "if(rec.WithSerene) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '30001'; row.Name = 'Datobox Software as a Service'; row.Qty = 0 ; row.Unit = 'UNI'; row.Price = 0; row.Discount = 0 ;rec.Items.push(row);} else {rec.Items.pop()}",
+            "type": "field"
+        },
+        {
+            "name": "WithTrailer",
+            "editor": "checkbox",
+            "label": {
+                "text": "Con Remolcador"
+            },
+            "afterEdit": "if(rec.WithTrailer) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '30001'; row.Name = 'Datobox Software as a Service'; row.Qty = 0 ; row.Unit = 'UNI'; row.Price = 0; row.Discount = 0 ;rec.Items.push(row);} else {rec.Items.pop() }",
+            "type": "field"
+        },
+        {
+            "name": "Items",
+            "editor": "detail",
+            "visible": false,
+            "label": {
+                "text": "Art. IVA Excl."
+            },
+            "canInsertRow": true,
+            "fields": [
+                {
+                    "name": "ArtCode",
+                    "editor": "string",
+                    "label": {
+                        "text": "ArtCode"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Name",
+                    "editor": "string",
+                    "readonly": true,
+                    "label": {
+                        "text": "Name"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Qty",
+                    "editor": "value",
+                    "label": {
+                        "text": "Cantidad"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Unit",
+                    "editor": "string",
+                    "label": {
+                        "text": "Unidad"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Price",
+                    "editor": "value",
+                    "label": {
+                        "text": "Precio"
+                    },
+                    "type": "field"
+                },
+                {
+                    "name": "Discount",
+                    "editor": "value",
+                    "label": {
+                        "text": "Descuento"
+                    },
+                    "type": "field"
+                }
+            ],
+            "type": "field"
+        },
+        {
+            "type": "title"
+        }
+    ],
+    "methods": {
+        "afterShowRecord": "async (rec) => {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm ; rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD') ; }",
+        "beforeSaveRecord": "async (draft, rec) => {return draft || rec.Items.length? true : 'Completar la sección de Selección' ; if(!rec.PayTerm) {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm} ; if(!rec.Currency) {rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency} ; ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD') ; return true}"
+    },
+    "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
+}

@@ -1,0 +1,990 @@
+{
+    "objects": [
+        {
+            "name": "NewImage",
+            "type": "image",
+            "position": {
+                "left": 0,
+                "top": 0
+            },
+            "size": {
+                "width": "209",
+                "height": "296"
+            },
+            "rowsPerPage": 0,
+            "lineheight": 0,
+            "src": "http://192.168.0.106:4000/oo/api/get_attached_file?id=17&OriginRecordName=DocumentSpec&OriginId=InvDocBElec&ts=70efdf2ec9b086079795c442636b55fb",
+            "show_in_pages": "",
+            "id": "1"
+        },
+        {
+            "name": "NewImage",
+            "type": "image",
+            "position": {
+                "left": 155.04781019133605,
+                "top": 258.2366466991215
+            },
+            "size": {
+                "width": "10",
+                "height": "10"
+            },
+            "rowsPerPage": 0,
+            "lineheight": 0,
+            "src": "http://192.168.0.106:4000/oo/api/get_attached_file?id=16&OriginRecordName=DocumentSpec&OriginId=InvDocBElec&ts=c74d97b01eae257e44aa9d5bade97baf",
+            "show_in_pages": "",
+            "id": "2"
+        },
+        {
+            "name": "NewImage",
+            "type": "image",
+            "position": {
+                "left": 117.74108453096338,
+                "top": 266.96800872890736
+            },
+            "size": {
+                "width": "25",
+                "height": "25"
+            },
+            "rowsPerPage": 0,
+            "lineheight": 0,
+            "src": "/barcode/qr/{{#QR_AFIP_ENCODED}}",
+            "show_in_pages": "",
+            "id": "3"
+        },
+        {
+            "name": "NewImage",
+            "type": "image",
+            "position": {
+                "left": 2,
+                "top": 280
+            },
+            "size": {
+                "width": "80",
+                "height": "15"
+            },
+            "rowsPerPage": 0,
+            "lineheight": 0,
+            "src": "/barcode/interleaved2of5/{{#BarcodesNr}}",
+            "show_in_pages": "",
+            "id": "4"
+        },
+        {
+            "name": "NewLabel",
+            "type": "label",
+            "position": {
+                "left": 155.04781019133605,
+                "top": 261.9408608935761
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "textalign": "left",
+            "text": "TOTAL:",
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "id": "5"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 101.86588212229417,
+                "top": 12.700161926935376
+            },
+            "fontsize": "30",
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "DocType",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": "13.22916666665",
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "6"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 98,
+                "top": 29
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "#InvCode",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "7"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 169.07090565232718,
+                "top": 10
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "OfficialSerNr",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "8"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 163.77917151610413,
+                "top": 21.960696665325756
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "InvoiceDate",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "9"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 17.727309356347295,
+                "top": 58.5
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "CustName",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "10"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 138.9080210758557,
+                "top": 57.944491131019795
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "@CustCode.FantasyName",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "11"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 19,
+                "top": 66
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "CustCode",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "12"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 18,
+                "top": 72
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "@CustCode.Address",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "13"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 125,
+                "top": 71.96758715816158
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "City",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "14"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 114.03687063560723,
+                "top": 71.96758715816158
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "@CustCode.ZipCode",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": "20",
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "15"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 161,
+                "top": 67
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "@CustCode.Locality",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "16"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 13.75850875417999,
+                "top": 79
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "TaxRegNr",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "17"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 12,
+                "top": 84.40316288034391
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "TaxRegType",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "18"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 33.86709847182767,
+                "top": 92.86993784012762
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "@PayTerm.Name",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "19"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 117.74108453096338,
+                "top": 92.86993784012762
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "OriginNr",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "20"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 180,
+                "top": 92.86993784012762
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "DueDate",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "21"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 2,
+                "top": 109.80348775969505
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "Items.Name",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "22"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 137,
+                "top": 109.80348775969505
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": "2",
+            "field": "Items.Qty",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": "11",
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "23"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 155.04781019133605,
+                "top": 109.80348775969505
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": "2",
+            "field": "Items.VATPrice",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": "11",
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "24"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 192,
+                "top": 109.80348775969505
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": "2",
+            "field": "Items.RowTotal",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "25"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 19.050242890403066,
+                "top": 216.69652162696445
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "SalesMan",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "26"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 38.894245901239586,
+                "top": 259
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "Comment",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "27"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 170,
+                "top": 261.9408608935761
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "Currency",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": "",
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "28"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 179.9189606315845,
+                "top": 261.6762741654008
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "Total",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "29"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 170.12925247957182,
+                "top": 283
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "#SalesCAI.Cae",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "30"
+        },
+        {
+            "name": "NewField",
+            "type": "field",
+            "position": {
+                "left": 170,
+                "top": 288
+            },
+            "fontsize": 9,
+            "fontfamily": "arial",
+            "fontweight": "normal",
+            "color": "black",
+            "lineheight": 1,
+            "decimals": null,
+            "field": "#SalesCAI.CaeDueDate",
+            "textalign": "left",
+            "rowsPerPage": 0,
+            "size": {
+                "width": null,
+                "height": null
+            },
+            "show_in_pages": "",
+            "abs": false,
+            "upper": false,
+            "lower": false,
+            "cap": false,
+            "num2words": false,
+            "format_date": "",
+            "case": "",
+            "func": "",
+            "detailskipinitial": "",
+            "detailstep": "",
+            "functions": [],
+            "id": "31"
+        }
+    ],
+    "pageSettings": {
+        "size": {
+            "width": 210,
+            "height": 297
+        },
+        "orientation": "portrait",
+        "margins": [
+            0,
+            0,
+            0,
+            0
+        ]
+    }
+}
