@@ -389,16 +389,16 @@
                 "pastefield": "Name"
             },
             "required": true,
-            "afterEdit": "rec.DxTrailer = (await cm.Trailer.getAll()).filter((r) => r.Name === val)[0].Code",
+            "afterEdit": "rec.DxTrailer = (await cm.Trailer.getAll()).filter((r) => r.Name === val)[0].Code ; rec.Enrollment = (await cm.Trailer.getAll()).filter((r) => r.Name === val)[0].Enrollment ; let v = await cm.Enrollment.bring(rec.Enrollment) ; if(v) {rec.NameEnrollment = v.Name ; console.log(v.Name)}",
             "type": "field"
         },
         {
             "name": "Enrollment",
             "editor": "string",
             "label": {
-                "text": "Cod. Matricula"
+                "text": "Matricula"
             },
-            "linkto": "Enrollment",
+            "linkto": "Cod. Enrollment",
             "pasteview": {
                 "columns": [
                     "Code",
@@ -406,8 +406,8 @@
                 ],
                 "pastefield": "Code"
             },
+            "readonly": true,
             "visible": false,
-            "required": true,
             "type": "field"
         },
         {
@@ -417,7 +417,7 @@
                 "text": "Matricula"
             },
             "linkto": "Enrollment",
-            "readonly": false,
+            "readonly": true,
             "pasteview": {
                 "columns": [
                     "Code",
@@ -425,7 +425,7 @@
                 ],
                 "pastefield": "Name"
             },
-            "required": true,
+            "visible": true,
             "afterEdit": "rec.Enrollment = (await cm.Enrollment.getAll()).filter((r) => r.Name === val)[0].Code",
             "type": "field"
         },
@@ -444,7 +444,7 @@
                 "pastefield": "Code"
             },
             "visible": false,
-            "required": true,
+            "readonly": true,
             "type": "field"
         },
         {
@@ -462,8 +462,28 @@
                 ],
                 "pastefield": "Name"
             },
-            "required": true,
-            "afterEdit": "rec.Barges = (await cm.Barges.getAll()).filter((r) => r.Name === val)[0].Code",
+            "afterEdit": "rec.Barges = (await cm.Barges.getAll()).filter((r) => r.Name === val)[0].Code; if(!rec.SetBarges){rec.SetBarges = rec.Barges} else{rec.SetBarges += ',' + rec.Barges}; ++rec.Number; rec.Barges = null ; rec.NameBarges = null",
+            "type": "field"
+        },
+        {
+            "name": "SetBarges",
+            "editor": "string",
+            "label": {
+                "text": "Set Barcazas"
+            },
+            "readonly": true,
+            "default": null,
+            "type": "field"
+        },
+        {
+            "name": "Number",
+            "editor": "integer",
+            "label": {
+                "text": "Número"
+            },
+            "visible": false,
+            "readonly": true,
+            "default": "0",
             "type": "field"
         },
         {
@@ -572,7 +592,6 @@
             "label": {
                 "text": "Fecha Zarpó"
             },
-            "required": true,
             "type": "field"
         },
         {
@@ -581,7 +600,6 @@
             "label": {
                 "text": "Hora Zarpó"
             },
-            "required": true,
             "type": "field"
         },
         {
@@ -592,7 +610,7 @@
             "name": "DxDivision",
             "editor": "checkbox",
             "label": {
-                "text": "División"
+                "text": "Fraccionamiento"
             },
             "afterEdit": "",
             "type": "field"
@@ -609,7 +627,7 @@
             "name": "WithSerene",
             "editor": "checkbox",
             "label": {
-                "text": "Con Serene"
+                "text": "Con Sereno"
             },
             "type": "field"
         },
@@ -724,10 +742,11 @@
         }
     ],
     "methods": {
-        "sumUpRow": "async () => {this.rec.Total = 0; for (let row of this.rec.Items) {this.rec.Total += parseInt(row.RowTotal || 0 )}}",
-        "updatePrice": "async (row, rec) => {console.log('asd') ; let prices = await cm.Price.getPrice(row.ArtCode, 1, rec.PriceDeal, moment()); row.VATPrice = prices[0]; row.Price = prices[0]; row.RowTotal = prices[0]; await this.sumUpRow(row) ;  this.rec.SubTotal = this.rec.Total}",
+        "sumUpRow": "async () => {console.log('Ingreso al sumUpRow'); this.rec.Total = 0; for (let row of this.rec.Items) {this.rec.Total += parseInt(row.RowTotal || 0 )}; this.rec.SubTotal = this.rec.Total}",
+        "updatePrice": "async (row, rec) => {console.log('asd') ; let prices = await cm.Price.getPrice(row.ArtCode, 1, rec.PriceDeal, moment()); row.VATPrice = prices[0]; row.Price = prices[0]; row.RowTotal = Math.round(row.Qty * row.Price); await this.sumUpRow(row)}",
+
         "afterShowRecord": "async (rec) => {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm ; rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD') ; }",
-        "beforeSaveRecord": "async (draft, rec) => {if(!rec.DxDivision && !rec.DxTransit && !rec.WithSerene && !rec.WithTrailer){return draft || rec.Items.length? true : 'Completar la sección de Selección'}; if(!rec.PayTerm) {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm} ; if(!rec.Currency) {rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency} ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD'); if(rec.DxDivision) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00253'; row.Name = 'Servicio de amarre por barcaza'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.DxTransit) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00255'; row.Name = 'Transito'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithSerene) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00257'; row.Name = 'Sereno'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithTrailer) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00251'; row.Name = 'Remolcador de custodia'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = row.VATPrice ; row.RowNet = row.VATPrice ; rec.Items.push(row)};  return true}"
+        "beforeSaveRecord": "async (draft, rec) => {if(!rec.DxDivision && !rec.DxTransit && !rec.WithSerene && !rec.WithTrailer){return draft || rec.Items.length? true : 'Completar la sección de Selección'}; if(!rec.PayTerm) {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm} ; if(!rec.Currency) {rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency} ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD'); if(rec.DxDivision) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00253'; row.Name = 'Servicio de amarre por barcaza'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.DxTransit) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00255'; row.Name = 'Transito'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithSerene) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00257'; row.Name = 'Sereno'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithTrailer) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00251'; row.Name = 'Remolcador de custodia'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.SetBarges && rec.Number) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00253'; row.Name = 'Servicio de amarre por barcaza'; row.Qty = rec.Number ; row.Unit = 'HORA' ; await updatePrice(row, rec);  row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ;rec.Items.push(row)} ; await sumUpRow() ; return true}"
     },
     "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
 }

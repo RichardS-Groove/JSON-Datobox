@@ -535,7 +535,7 @@
     }
   ],
   "methods": {
-    "rowSumUp": "async (row) => { row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.Qty * row.Price ; row.Nr = this.rec.Items.length ; await this.sumQtyTotal() ; await this.sumUp()}",
+    "rowSumUp": "async (row) => { row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowTotal = row.Qty * row.Price ; row.Nr = this.rec.Items.length ; await this.sumQtyTotal() ; await this.sumUp()}",
     "sumUp": "async () => {let total = 0 ; total = this.rec.Items.map( i => i.Qty * i.Price) ; this.rec.Total = total.reduce((a, b) => a + b, 0).toFixed(2); this.rec.TotalQty = parseInt(this.rec.Items.map(r => parseInt(r.Qty)).reduce( (a,b) => a + b , 0));} ",
     "sumUpRow": "async () => {this.rec.Total = 0; for (let row of this.rec.Items) {this.rec.Total += parseInt(row.RowTotal || 0 ).toFixed(2)}}",
     "pasteArtCode": "async (row) => {if (!row.Labels) row.Labels = 'U'; await this.updatePrice(row, this.rec); await this.rowSumUp(row)}",
