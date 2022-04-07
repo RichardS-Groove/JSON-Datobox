@@ -1,0 +1,382 @@
+{
+  "name": "Health Check",
+  "fullScreen": false,
+  "dateField": "TransDate",
+  "timeField": "TransTime",
+  "icon": "fa-clipboard-list",
+  "location": {
+    "field": "Location",
+    "attachMap": true
+  },
+  "recordname": "HealthCheck",
+  "actions": [
+    "post",
+    "put",
+    "get"
+  ],
+  "fields": [
+    {
+      "name": "Office",
+      "editor": "string",
+      "label": {
+        "text": "Office"
+      },
+      "default": "dev.fields.Office",
+      "visible": true,
+      "type": "field"
+    },
+    {
+      "name": "Computer",
+      "editor": "string",
+      "label": {
+        "text": "Computer"
+      },
+      "default": "dev.fields.Computer",
+      "visible": true,
+      "type": "field"
+    },
+    {
+      "name": "Department",
+      "editor": "string",
+      "label": {
+        "text": "Department"
+      },
+      "default": "dev.fields.Department",
+      "visible": true,
+      "type": "field"
+    },
+    {
+      "name": "Shift",
+      "editor": "string",
+      "label": {
+        "text": "Turno"
+      },
+      "visible": true,
+      "default": "dev.fields.Shift",
+      "type": "field"
+    },
+    {
+      "name": "Location",
+      "editor": "location",
+      "visible": false,
+      "type": "field",
+      "label": {
+        "text": "Location"
+      }
+    },
+    {
+      "name": "User",
+      "editor": "string",
+      "default": "dev.fields.User",
+      "visible": false,
+      "type": "field",
+      "label": {
+        "text": "User"
+      }
+    },
+    {
+      "type": "title",
+      "label": "Health Check"
+    },
+    {
+      "type": "button",
+      "label": {
+        "text": "Sync Force (save)"
+      },
+      "click": "(async () => {d = await cm.DatoboxDevice.bring(app.deviceCode); if(d) {rec.User = d.User; rec.Office = d.Office ; rec.Computer = d.Computer ; rec.Department = d.Department ; rec.Shift = d.Shift}; $form.checkRequiredFields(); $form.save(); $form.notification.type = 'fail'; if($form.checkRequiredFields() && $form.save() && rec.Office && rec.Computer && rec.Department && rec.Shift){$form.notification.message = 'Sync Force Éxito'; $form.notification.show = true}})()",
+      "visible": true
+    },
+    {
+      "type": "button",
+      "label": {
+        "text": "Sync Force (no save)"
+      },
+      "click": "(async () => {d = await cm.DatoboxDevice.bring(app.deviceCode); if(d) {rec.Office = null ; rec.Computer = null ; rec.Department = d.Department ; rec.Shift = d.Shift}; let a = $form.save(); $form.notification.type = 'fail'; if(a && rec.Office && rec.Computer && rec.Department && rec.Shift){$form.notification.message = 'Sync Force Éxito'} else {$form.notification.message = 'Sync Force - Error'}; $form.notification.show = true; })()",
+      "visible": true
+    },
+    {
+      "type": "button",
+      "label": {
+        "text": "Mensaje"
+      },
+      "click": "(async () => {$form.notification.type = 'fail'; $form.notification.message = 'Prueba de éxito'; $form.notification.show = true;})()",
+      "visible": true
+    },
+    {
+      "name": "x",
+      "editor": "string",
+      "label": {
+        "text": "x"
+      },
+      "type": "field"
+    },
+    {
+      "type": "button",
+      "label": {
+        "text": "USer"
+      },
+      "click": "(async () => {rec.x = app.deviceCode})()",
+      "visible": true
+    },
+    {
+      "type": "button",
+      "label": {
+        "text": "Save X"
+      },
+      "click": "(async () => {$form.save();})()",
+      "visible": true
+    },
+    {
+      "name": "TransDate",
+      "editor": "date",
+      "required": true,
+      "label": {
+        "text": "Fecha"
+      },
+      "type": "field"
+    },
+    {
+      "name": "AudCode",
+      "visible": true,
+      "editor": "string",
+      "label": {
+        "text": "AudCode"
+      },
+      "pasteview": {
+        "columns": [
+          "Name",
+          "LastName"
+        ],
+        "pastefield": "Code"
+      },
+      "type": "field"
+    },
+    {
+      "name": "AudName",
+      "editor": "string",
+      "linkto": "Person",
+      "label": {
+        "text": "Empleado"
+      },
+      "readonly": false,
+      "required": false,
+      "pasteview": {
+        "columns": [
+          "Name",
+          "LastName"
+        ],
+        "pastefield": "Name"
+      },
+      "afterEdit": "rec.AudCode = (await cm.Person.getAll()).filter((r) => r.Name === val)[0].Code",
+      "type": "field"
+    },
+    {
+      "name": "StSalud",
+      "editor": "combobox",
+      "required": true,
+      "label": {
+        "text": "Estado de salud general manifestado"
+      },
+      "options": [
+        {
+          "value": "",
+          "label": ""
+        },
+        {
+          "value": "1",
+          "label": "Mal"
+        },
+        {
+          "value": "2",
+          "label": "Regular"
+        },
+        {
+          "value": "3",
+          "label": "Bien"
+        }
+      ],
+      "type": "field"
+    },
+    {
+      "name": "ManDolGar",
+      "editor": "combobox",
+      "required": true,
+      "label": {
+        "text": "Manifiesta dolor de garganta"
+      },
+      "options": [
+        {
+          "value": "",
+          "label": ""
+        },
+        {
+          "value": "1",
+          "label": "Si"
+        },
+        {
+          "value": "2",
+          "label": "No"
+        }
+      ],
+      "type": "field"
+    },
+    {
+      "name": "ManDol",
+      "editor": "combobox",
+      "required": true,
+      "label": {
+        "text": "Manifiesta falta de aire"
+      },
+      "options": [
+        {
+          "value": "",
+          "label": ""
+        },
+        {
+          "value": "1",
+          "label": "Si"
+        },
+        {
+          "value": "2",
+          "label": "No"
+        }
+      ],
+      "type": "field"
+    },
+    {
+      "type": "title",
+      "label": "Medidas de contención"
+    },
+    {
+      "name": "Masc",
+      "editor": "combobox",
+      "required": true,
+      "label": {
+        "text": "Mascarilla"
+      },
+      "options": [
+        {
+          "value": "",
+          "label": ""
+        },
+        {
+          "value": "1",
+          "label": "Si"
+        },
+        {
+          "value": "2",
+          "label": "No"
+        }
+      ],
+      "type": "field"
+    },
+    {
+      "name": "AcGel",
+      "editor": "combobox",
+      "required": true,
+      "label": {
+        "text": "Alcohol en gel personal"
+      },
+      "options": [
+        {
+          "value": "",
+          "label": ""
+        },
+        {
+          "value": "1",
+          "label": "Si"
+        },
+        {
+          "value": "2",
+          "label": "No"
+        }
+      ],
+      "type": "field"
+    },
+    {
+      "name": "Guant",
+      "editor": "combobox",
+      "required": true,
+      "label": {
+        "text": "Guantes"
+      },
+      "options": [
+        {
+          "value": "",
+          "label": ""
+        },
+        {
+          "value": "1",
+          "label": "Si"
+        },
+        {
+          "value": "2",
+          "label": "No"
+        }
+      ],
+      "type": "field"
+    },
+    {
+      "type": "title",
+      "label": "Medición de temperatura"
+    },
+    {
+      "name": "Medic",
+      "editor": "star",
+      "required": true,
+      "stars": 5,
+      "label": {
+        "text": "Valor de Temperatura"
+      },
+      "type": "field"
+    },
+    {
+      "name": "TransTime",
+      "editor": "time",
+      "required": true,
+      "label": {
+        "text": "Hora de medición"
+      },
+      "type": "field"
+    },
+    {
+      "name": "FotoMedicion.jpg",
+      "editor": "image",
+      "label": {
+        "text": "Foto de la Medición"
+      },
+      "config": {
+        "attach": true
+      },
+      "type": "field"
+    },
+    {
+      "name": "Diag",
+      "editor": "memo",
+      "label": {
+        "text": "Diagnostico"
+      },
+      "type": "field"
+    },
+    {
+      "type": "title",
+      "label": "Fima de Empleado"
+    },
+    {
+      "name": "FirmaEmpleado",
+      "editor": "signature",
+      "required": true,
+      "label": {
+        "text": "Fima de Empleado"
+      },
+      "config": {
+        "attach": true
+      },
+      "type": "field"
+    }
+  ],
+  "methods": {
+    "afterShowRecord": "async (rec) => {rec.TransTime = moment().format('HH:mm:ss')}"
+  },
+  "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
+}
