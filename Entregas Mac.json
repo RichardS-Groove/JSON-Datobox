@@ -1,0 +1,319 @@
+{
+    "name": "Entregas",
+    "fullScreen": false,
+    "dateField": "TransDate",
+    "timeField": "TransTime",
+    "inherits": "Transaction",
+    "dashboard": true,
+    "new_button": false,
+    "syncDays": 5,
+    "icon": "fa-clipboard-list",
+    "bgcolor": "",
+    "textColor": "",
+    "location": {
+        "field": "Location",
+        "attachMap": true
+    },
+    "recordname": "DeliveryMacDatobox",
+    "actions": [
+        "post",
+        "put",
+        "get"
+    ],
+    "fields": [
+        {
+            "name": "Office",
+            "editor": "string",
+            "label": {
+                "text": "Office"
+            },
+            "default": "dev.fields.Office",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Computer",
+            "editor": "string",
+            "label": {
+                "text": "Computer"
+            },
+            "default": "dev.fields.Computer",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Department",
+            "editor": "string",
+            "label": {
+                "text": "Department"
+            },
+            "default": "dev.fields.Department",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Shift",
+            "editor": "string",
+            "label": {
+                "text": "Turno"
+            },
+            "visible": false,
+            "default": "dev.fields.Shift",
+            "type": "field"
+        },
+        {
+            "name": "Location",
+            "editor": "location",
+            "visible": false,
+            "type": "field",
+            "label": {
+                "text": "Location"
+            }
+        },
+        {
+            "name": "User",
+            "editor": "string",
+            "label": {
+                "text": "User"
+            },
+            "default": "dev.fields.User",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "label": "Entrega"
+        },
+        {
+            "name": "TransDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('YYYY-MM-DD')",
+            "type": "field"
+        },
+        {
+            "name": "TransTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('HH:mm:ss')",
+            "type": "field"
+        },
+        {
+            "name": "UserNameDatobox",
+            "editor": "string",
+            "label": {
+                "text": "Usuario"
+            },
+            "visible": false,
+            "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Name",
+            "linkto": "User",
+            "readonly": "true",
+            "type": "field"
+        },
+        {
+            "name": "UserLongitude",
+            "editor": "string",
+            "label": {
+                "text": "Longitud Site"
+            },
+            "required": true,
+            "readonly": false,
+            "type": "field"
+        },
+        {
+            "name": "UserLatitude",
+            "editor": "string",
+            "label": {
+                "text": "Latitud Site"
+            },
+            "required": true,
+            "readonly": false,
+            "type": "field"
+        },
+        {
+            "type": "button",
+            "label": {
+                "text": "Recargar Ubicación"
+            },
+            "isLocation": true,
+            "click": "(async () => {let location = await app.getCurrentLocation(); if(location && !rec.UserLongitude && !rec.UserLatitude){rec.UserLatitude = location.coords.latitude; rec.UserLongitude = location.coords.longitude} else{alert('debe habilitar ubicacion')}})()",
+            "visible": "!rec.UserLongitude || !rec.UserLatitude"
+        },
+        {
+            "name": "CustLongitude",
+            "editor": "string",
+            "label": {
+                "text": "Longitud Cliente"
+            },
+            "visible": "false",
+            "required": true,
+            "readonly": "true",
+            "type": "field"
+        },
+        {
+            "name": "CustLatitude",
+            "editor": "string",
+            "label": {
+                "text": "Latitud Cliente"
+            },
+            "visible": "false",
+            "required": true,
+            "readonly": "true",
+            "type": "field"
+        },
+        {
+            "name": "CustCode",
+            "editor": "string",
+            "linkto": "Customer",
+            "label": {
+                "text": "Código de Cliente"
+            },
+            "readonly": true,
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "CustName",
+            "editor": "string",
+            "label": {
+                "text": "Cliente"
+            },
+            "linkto": "Customer",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name",
+                    "Latitude",
+                    "Longitude"
+                ],
+                "pastefield": "Name"
+            },
+            "afterEdit": "rec.CustCode = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Code; let d = await cm.Customer.bring(rec.CustCode); if(d) {rec.CustLongitude = d.Latitude ; rec.CustLatitude = d.Longitude} ",
+            "type": "field"
+        },
+        {
+            "type": "button",
+            "label": {
+                "text": "Ubicación Cliente"
+            },
+            "isLocation": true,
+            "click": "window.open('https://www.google.com/maps/place/'+ rec.CustLatitude + ',' + rec.CustLongitude)",
+            "visible": "rec.CustLongitude && rec.CustLatitude"
+        },
+        {
+            "name": "VehicleCode",
+            "editor": "string",
+            "linkto": "Vehicle",
+            "label": {
+                "text": "Código de Vehículo"
+            },
+            "readonly": true,
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "VehicleName",
+            "editor": "string",
+            "label": {
+                "text": "Vehículo"
+            },
+            "linkto": "Vehicle",
+            "readonly": false,
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "SupName"
+                ],
+                "pastefield": "SupName"
+            },
+            "afterEdit": "rec.VehicleCode = (await cm.Vehicle.getAll()).filter((r) => r.SupName === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "RouteCode",
+            "editor": "string",
+            "linkto": "Route",
+            "label": {
+                "text": "Código de Ruta"
+            },
+            "readonly": true,
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "RouteName",
+            "editor": "string",
+            "label": {
+                "text": "Ruta"
+            },
+            "linkto": "Route",
+            "pasteview": {
+                "columns": [
+                    "Code",
+                    "Name"
+                ],
+                "pastefield": "Name"
+            },
+            "afterEdit": "rec.RouteCode = (await cm.Route.getAll()).filter((r) => r.Name === val)[0].Code",
+            "type": "field"
+        },
+        {
+            "name": "ManagementType",
+            "editor": "combobox",
+            "label": {
+                "text": "Tipo de Gestión"
+            },
+            "options": [
+                {
+                    "value": 0,
+                    "label": ""
+                },
+                {
+                    "value": 1,
+                    "label": "Entrega"
+                },
+                {
+                    "value": 2,
+                    "label": "Venta"
+                },
+                {
+                    "value": 3,
+                    "label": "Cobranza"
+                }
+            ],
+            "required": true,
+            "type": "field"
+        },
+        {
+            "name": "Observations",
+            "editor": "memo",
+            "label": {
+                "text": "Observaciones"
+            },
+            "type": "field"
+        },
+        {
+            "name": "Image.jpg",
+            "editor": "image",
+            "label": {
+                "text": "Foto"
+            },
+            "config": {
+                "attach": true
+            },
+            "type": "field"
+        }
+    ],
+    "methods": {
+        "afterShowRecord": "async (rec) => {let location = await app.getCurrentLocation(); rec.UserLatitude = location.coords.latitude; rec.UserLongitude = location.coords.longitude}",
+        "beforeSaveRecord": "async (draft, rec) => {if (rec.Location === null && rec.UserLatitude === null && rec.UserLongitude === null){alert('debe habilitar ubicacion'); return false} return true;}"
+    },
+    "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
+}
