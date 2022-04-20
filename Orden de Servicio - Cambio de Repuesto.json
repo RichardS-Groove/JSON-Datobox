@@ -1,0 +1,1162 @@
+{
+    "name": "Orden de Servicio - Cambio de Repuesto",
+    "description": "Orden de Servicio - Cambio de Repuesto",
+    "dateField": "TransDate",
+    "timeField": "TransTime",
+    "icon": "fa-thermometer-full",
+    "StartDateField": "StartDate",
+    "syncDays": 30,
+    "ServiceOrderType": "CAMBIO-REPUESTO",
+    "fullScreen": false,
+    "location": {
+        "field": "Location",
+        "attachMap": true
+    },
+    "recordname": "ServiceOrder",
+    "actions": [
+        "post",
+        "put",
+        "get"
+    ],
+    "fields": [
+        {
+            "type": "steps",
+            "content": [
+                {
+                    "label": "Información General",
+                    "icon": "fa fa-edit",
+                    "content": [
+                        {
+                            "name": "Office",
+                            "editor": "string",
+                            "linkto": "Office",
+                            "default": "dev.fields.Office",
+                            "visible": "false",
+                            "type": "field",
+                            "label": {
+                                "text": "Office"
+                            }
+                        },
+                        {
+                            "name": "DatoboxSync",
+                            "label": {
+                                "text": "DatoboxSync"
+                            },
+                            "editor": "checkbox",
+                            "readonly": false,
+                            "visible": false,
+                            "type": "field"
+                        },
+                        {
+                            "name": "Computer",
+                            "editor": "string",
+                            "linkto": "Computer",
+                            "default": "dev.fields.Computer",
+                            "visible": "false",
+                            "type": "field",
+                            "label": {
+                                "text": "Computer"
+                            }
+                        },
+                        {
+                            "name": "Location",
+                            "editor": "location",
+                            "visible": false,
+                            "type": "field",
+                            "label": {
+                                "text": "Location"
+                            }
+                        },
+                        {
+                            "name": "General",
+                            "type": "title",
+                            "label": "Información Cliente",
+                            "description": ""
+                        },
+                        {
+                            "name": "TransTimeIni",
+                            "label": {
+                                "text": "Hora de Inicio"
+                            },
+                            "editor": "time",
+                            "visible": true,
+                            "readonly": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "TransTimeFin",
+                            "label": {
+                                "text": "Hora de Fin"
+                            },
+                            "editor": "time",
+                            "visible": true,
+                            "readonly": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "TransDate",
+                            "label": {
+                                "text": "Fecha"
+                            },
+                            "description": "",
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "TechVisitDate",
+                            "label": {
+                                "text": "Fecha visita"
+                            },
+                            "description": "",
+                            "visible": false,
+                            "type": "field"
+                        },
+                        {
+                            "name": "RecordSource",
+                            "readonly": true,
+                            "label": {
+                                "text": "Registro de Origen"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "SerNr",
+                            "readonly": true,
+                            "label": {
+                                "text": "Nro Servicio"
+                            },
+                            "editor": "integer",
+                            "type": "field"
+                        },
+                        {
+                            "name": "CustCode",
+                            "required": true,
+                            "visible": false,
+                            "editor": "string",
+                            "label": {
+                                "text": "Codigo Cliente"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "CustName",
+                            "editor": "string",
+                            "label": {
+                                "text": "Nombre Cliente"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "editor": "string",
+                            "type": "field",
+                            "name": "ArtCode",
+                            "label": {
+                                "text": "Código Modelo"
+                            },
+                            "visible": true,
+                            "linkto": "Item",
+                            "validate": null,
+                            "mask": null,
+                            "include_in_email": false,
+                            "pasteview": {
+                                "pastefield": null,
+                                "columns": null,
+                                "filter": "(r) => {return r.ItemGroup == 'MAQ-NUEVAS'}"
+                            },
+                            "required": true,
+                            "afterEdit": "let remote = await cm[linkto].bring(val); if (remote) (typeof row !== 'undefined'? row : rec)['ArtName'] = remote.fields['Name']"
+                        },
+                        {
+                            "name": "ArtName",
+                            "readonly": true,
+                            "required": false,
+                            "label": {
+                                "text": "Modelo"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "SerialNr",
+                            "readonly": false,
+                            "required": false,
+                            "label": {
+                                "text": "Serie"
+                            },
+                            "editor": "string",
+                            "afterEdit": "(async () => {rec.SerialNr = rec.SerialNr.replace(/ /g, \"\")})()",
+                            "type": "field"
+                        },
+                        {
+                            "name": "Address",
+                            "readonly": true,
+                            "label": {
+                                "text": "Dirección"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "PersonName",
+                            "readonly": true,
+                            "label": {
+                                "text": "Contacto"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "PersonPhone",
+                            "readonly": true,
+                            "label": {
+                                "text": "Teléfono Contacto"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "PersonEmail",
+                            "readonly": true,
+                            "label": {
+                                "text": "Email Contacto"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "SOType",
+                            "readonly": true,
+                            "label": {
+                                "text": "Tipo Contrato"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "Technician",
+                            "visible": false,
+                            "editor": "string",
+                            "label": {
+                                "text": "Codigo Tecnico"
+                            },
+                            "pasteview": {
+                                "columns": [
+                                    "Code",
+                                    "Name"
+                                ],
+                                "pastefield": "Code"
+                            },
+                            "afterEdit": "rec.TechName = (await cm.User.bring(val)).FullName",
+                            "type": "field"
+                        },
+                        {
+                            "name": "TechName",
+                            "editor": "string",
+                            "label": {
+                                "text": "Nombre del Tecnico"
+                            },
+                            "linkto": "User",
+                            "readonly": true,
+                            "pasteview": {
+                                "columns": [
+                                    "Code",
+                                    "Name"
+                                ],
+                                "pastefield": "FullName"
+                            },
+                            "afterEdit": "rec.Techician = (await cm.User.getAll()).filter((r) => r.FullName === val)[0].Code",
+                            "type": "field"
+                        },
+                        {
+                            "name": "Technician2User",
+                            "editor": "string",
+                            "label": {
+                                "text": "Técnico Acompañante"
+                            },
+                            "visible": true,
+                            "type": "field",
+                            "linkto": "User",
+                            "required": false,
+                            "readonly": false,
+                            "pasteview": {
+                                "columns": [
+                                    "Code",
+                                    "Name"
+                                ],
+                                "filter": "(r) => {return (r.UserRole == 'TEC-CAMPO')} "
+                            }
+                        },
+                        {
+                            "name": "Contadores",
+                            "type": "title",
+                            "label": " CONTADORES ",
+                            "description": ""
+                        },
+                        {
+                            "name": "BnClickQtyPrev",
+                            "readonly": true,
+                            "label": {
+                                "text": "B/N Inicial"
+                            },
+                            "editor": "integer",
+                            "type": "field"
+                        },
+                        {
+                            "name": "BnClickQty",
+                            "readonly": false,
+                            "required": true,
+                            "label": {
+                                "text": "B/N Final"
+                            },
+                            "editor": "integer",
+                            "type": "field"
+                        },
+                        {
+                            "name": "ColorClickQtyPrev",
+                            "readonly": true,
+                            "label": {
+                                "text": "Color Inicial"
+                            },
+                            "editor": "integer",
+                            "type": "field"
+                        },
+                        {
+                            "name": "ColorClickQty",
+                            "readonly": false,
+                            "label": {
+                                "text": "Color Final"
+                            },
+                            "editor": "integer",
+                            "type": "field",
+                            "visible": true
+                        },
+                        {
+                            "name": "CommentTech",
+                            "readonly": true,
+                            "label": {
+                                "text": "Observaciones"
+                            },
+                            "editor": "memo",
+                            "type": "field"
+                        }
+                    ],
+                    "type": "steps_page"
+                },
+                {
+                    "label": "Fotos",
+                    "icon": "fa fa-camera",
+                    "content": [
+                        {
+                            "name": "ImgFront1.jpg",
+                            "editor": "image",
+                            "label": {
+                                "text": "Foto Delantera"
+                            },
+                            "description": "",
+                            "config": {
+                                "attach": true
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "ImgBack1.jpg",
+                            "editor": "image",
+                            "label": {
+                                "text": "Foto Posterior"
+                            },
+                            "description": "",
+                            "config": {
+                                "attach": true
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "ImgElectric.jpg",
+                            "editor": "image",
+                            "label": {
+                                "text": "Toma Eléctrica"
+                            },
+                            "description": "",
+                            "config": {
+                                "attach": true
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "ImgCounter.jpg",
+                            "editor": "image",
+                            "required": true,
+                            "label": {
+                                "text": "Contador"
+                            },
+                            "description": "",
+                            "config": {
+                                "attach": true
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "ImgConfig.jpg",
+                            "editor": "image",
+                            "label": {
+                                "text": "Configuración"
+                            },
+                            "description": "",
+                            "config": {
+                                "attach": true
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "InternalCheck",
+                            "readonly": false,
+                            "default": true,
+                            "label": {
+                                "text": ""
+                            },
+                            "editor": "checkbox",
+                            "type": "field"
+                        },
+                        {
+                            "name": "CommentComercial",
+                            "readonly": false,
+                            "label": {
+                                "text": "Recomendación Comercial"
+                            },
+                            "editor": "memo",
+                            "type": "field",
+                            "visible": "rec.InternalCheck != false "
+                        }
+                    ],
+                    "type": "steps_page"
+                },
+                {
+                    "label": "Repuestos y Revisión",
+                    "icon": "fa fa-cog fa-fw",
+                    "content": [
+                        {
+                            "name": "Parts",
+                            "editor": "detail",
+                            "label": {
+                                "text": "Repuestos a cambiar"
+                            },
+                            "canInsertRow": false,
+                            "canDeleteRow": false,
+                            "canEditRow": false,
+                            "fields": [
+                                {
+                                    "name": "ArtName",
+                                    "label": {
+                                        "text": "Descripción del Producto"
+                                    },
+                                    "editor": "string",
+                                    "readonly": true,
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Qty",
+                                    "label": {
+                                        "text": "Qty"
+                                    },
+                                    "editor": "value",
+                                    "readonly": true,
+                                    "type": "field"
+                                }
+                            ],
+                            "type": "field"
+                        },
+                        {
+                            "name": "ProblemDescription",
+                            "editor": "string",
+                            "label": {
+                                "text": "Falla Reportada"
+                            },
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "Problems",
+                            "readonly": true,
+                            "label": {
+                                "text": "Descripción de Falla"
+                            },
+                            "editor": "memo",
+                            "type": "field"
+                        },
+                        {
+                            "name": "FallaEncontrada",
+                            "type": "title",
+                            "label": "Falla Encontrada",
+                            "description": ""
+                        },
+                        {
+                            "name": "ProblemFound",
+                            "editor": "string",
+                            "label": {
+                                "text": "Falla Encontrada"
+                            },
+                            "visible": true,
+                            "type": "field",
+                            "linkto": "StandardProblem",
+                            "required": true,
+                            "readonly": false,
+                            "pasteview": {
+                                "columns": [
+                                    "Code",
+                                    "Comment"
+                                ],
+                                "filter": "(r) => {return (r.Type == 'Orden-Servicio' && r.Closed != 1)} "
+                            }
+                        },
+                        {
+                            "name": "Comment",
+                            "readonly": false,
+                            "label": {
+                                "text": ""
+                            },
+                            "editor": "memo",
+                            "type": "field"
+                        },
+                        {
+                            "name": "WorkDescription",
+                            "readonly": false,
+                            "required": true,
+                            "label": {
+                                "text": "Trabajo Realizado"
+                            },
+                            "editor": "memo",
+                            "type": "field"
+                        },
+                        {
+                            "name": "DetalleRevision",
+                            "type": "title",
+                            "label": "Detalle de Revisión",
+                            "description": ""
+                        },
+                        {
+                            "name": "CheckTestChart1",
+                            "label": {
+                                "text": "Test Chart",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "CheckARDF",
+                            "label": {
+                                "text": "ARDF",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckRodilloAlimentacion",
+                            "label": {
+                                "text": "Rodillos de alimentación, transporte y salida de original"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyARDF()"
+                        },
+                        {
+                            "name": "CheckSensoresOriginal",
+                            "label": {
+                                "text": "Sensores de original"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyARDF()"
+                        },
+                        {
+                            "name": "CheckOpticos",
+                            "label": {
+                                "text": "Opticos",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckCristalExposicion",
+                            "label": {
+                                "text": "Cristal de Exposición, lentes, espejos, reflectores, sensores"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyOpticos()"
+                        },
+                        {
+                            "name": "CheckGuiasRieles",
+                            "label": {
+                                "text": "Guías y rieles del explorador"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyOpticos()"
+                        },
+                        {
+                            "name": "CheckUnidadImagen",
+                            "label": {
+                                "text": "Unidad de Imagen",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckCilindro",
+                            "label": {
+                                "text": "Cilindro"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadImagen()"
+                        },
+                        {
+                            "name": "CheckRodilloCarga",
+                            "label": {
+                                "text": "Rodillo de carga, limpiador de carga"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadImagen()"
+                        },
+                        {
+                            "name": "CheckLaminaCepillo",
+                            "label": {
+                                "text": "Lámina y cepillo de limpieza"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadImagen()"
+                        },
+                        {
+                            "name": "CheckSensores",
+                            "label": {
+                                "text": "Sensores"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadImagen()"
+                        },
+                        {
+                            "name": "CheckUnidadRevelado",
+                            "label": {
+                                "text": "Unidad de Revelado",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckGuiasPinones",
+                            "label": {
+                                "text": "Guías y Piñones"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadRevelado()"
+                        },
+                        {
+                            "name": "CheckUnidadTransferencia",
+                            "label": {
+                                "text": "Unidad de Transferencia",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckBandaTransferencia",
+                            "label": {
+                                "text": "Banda de Transferencia"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadTransferencia()"
+                        },
+                        {
+                            "name": "CheckLaminaLimpieza",
+                            "label": {
+                                "text": "Lámina de limpieza de banda"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadTransferencia()"
+                        },
+                        {
+                            "name": "CheckUnidadToner",
+                            "label": {
+                                "text": "Unidad de Suministro de Toner"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadTransferencia()"
+                        },
+                        {
+                            "name": "CheckTolvaToner",
+                            "label": {
+                                "text": "Tolva de toner"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadTransferencia()"
+                        },
+                        {
+                            "name": "CheckCristalProteccion",
+                            "label": {
+                                "text": "Cristal de Proteccion de láser"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadTransferencia()"
+                        },
+                        {
+                            "name": "CheckRecorridoPapel",
+                            "label": {
+                                "text": "Recorrido de Papel",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckRodilloAlimentacionPapel",
+                            "label": {
+                                "text": "Rodillos de alimentación, transporte, registro y salida de papel"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyRecorridoPapel()"
+                        },
+                        {
+                            "name": "CheckSensoresPapel",
+                            "label": {
+                                "text": "Sensores de Papel"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyRecorridoPapel()"
+                        },
+                        {
+                            "name": "CheckUnidadFusion",
+                            "label": {
+                                "text": "Unidad de Fusión",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckRodilloCalorPresion",
+                            "label": {
+                                "text": "Rodillo de calor, presion, rodillo de limpieza, bujes, piñones y uñetas"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadFusion()"
+                        },
+                        {
+                            "name": "CheckTermistoresSensores",
+                            "label": {
+                                "text": "Termistores, sensores"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadFusion()"
+                        },
+                        {
+                            "name": "CheckUnidadDuplex",
+                            "label": {
+                                "text": "Unidad Duplex",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckRodillosAlimentacionDuplex",
+                            "label": {
+                                "text": "Rodillos de alimentación, transporte y salida"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadDuplex()"
+                        },
+                        {
+                            "name": "CheckSensoresDuplex",
+                            "label": {
+                                "text": "Sensores duplex"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadDuplex()"
+                        },
+                        {
+                            "name": "CheckChequeoSps",
+                            "label": {
+                                "text": "Chequeo SP"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifyUnidadDuplex()"
+                        },
+                        {
+                            "name": "CheckLimpiezaExterior",
+                            "label": {
+                                "text": "Limpieza Exterior",
+                                "style": {
+                                    "font-weight": "bold"
+                                }
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "readonly": true
+                        },
+                        {
+                            "name": "CheckTestChart2",
+                            "label": {
+                                "text": "Test Chart"
+                            },
+                            "editor": "checkbox",
+                            "visible": true,
+                            "type": "field",
+                            "afterEdit": "await verifySensoresDuplex()"
+                        },
+                        {
+                            "name": "Optionals",
+                            "readonly": true,
+                            "label": {
+                                "text": "Opcionales"
+                            },
+                            "editor": "memo",
+                            "type": "field"
+                        }
+                    ],
+                    "type": "steps_page"
+                },
+                {
+                    "label": "Requiere Repuestos?",
+                    "icon": "fa fa-calendar-check",
+                    "type": "steps_page",
+                    "content": [
+                        {
+                            "name": "ExtraItems",
+                            "editor": "detail",
+                            "label": {
+                                "text": "SOLICITAR REPUESTOS POR NOTA DE PEDIDO"
+                            },
+                            "canInsertRow": true,
+                            "fields": [
+                                {
+                                    "name": "ArtCode",
+                                    "label": {
+                                        "text": "COD"
+                                    },
+                                    "editor": "string",
+                                    "afterEdit": "await pasteArtCode(row)",
+                                    "readonly": false,
+                                    "linkto": "Item",
+                                    "pasteview": {
+                                        "columns": [
+                                            "Code",
+                                            "Name"
+                                        ],
+                                        "filter": "(rw) => { return (rw.ItemGroup == 'REPUESTOS' || rw.ItemGroup == 'SUMINISTROS')  && !rw.Closed }",
+                                        "pastefield": "Code"
+                                    },
+                                    "type": "field",
+                                    "required": true
+                                },
+                                {
+                                    "name": "ArtName",
+                                    "label": {
+                                        "text": "Descripción del Producto"
+                                    },
+                                    "editor": "string",
+                                    "readonly": "row.ArtCode !== 'RPCAN'",
+                                    "type": "field",
+                                    "afterEdit": null,
+                                    "required": true
+                                },
+                                {
+                                    "name": "Qty",
+                                    "label": {
+                                        "text": "Qty"
+                                    },
+                                    "editor": "value",
+                                    "required": true,
+                                    "readonly": false,
+                                    "default": 1,
+                                    "type": "field",
+                                    "afterEdit": null
+                                }
+                            ],
+                            "type": "field"
+                        },
+                        {
+                            "name": "ReasonForChange",
+                            "required": false,
+                            "editor": "combobox",
+                            "label": {
+                                "text": "Motivo de Cambio Repuesto"
+                            },
+                            "options": [
+                                {
+                                    "value": 0,
+                                    "label": ""
+                                },
+                                {
+                                    "value": 1,
+                                    "label": "Garantía"
+                                },
+                                {
+                                    "value": 2,
+                                    "label": "Daño Usuario"
+                                },
+                                {
+                                    "value": 3,
+                                    "label": "Uso normal"
+                                }
+                            ],
+                            "type": "field"
+                        },
+                        {
+                            "name": "AdditionalSO",
+                            "required": true,
+                            "editor": "combobox",
+                            "label": {
+                                "text": "Requiere Orden de Servicio Adicional:"
+                            },
+                            "options": [
+                                {
+                                    "value": "",
+                                    "label": ""
+                                },
+                                {
+                                    "value": "No",
+                                    "label": "No"
+                                },
+                                {
+                                    "value": "Instalacion",
+                                    "label": "Instalación"
+                                },
+                                {
+                                    "value": "Configuracion",
+                                    "label": "Configuración"
+                                },
+                                {
+                                    "value": "Capacitacion",
+                                    "label": "Capacitación"
+                                },
+                                {
+                                    "value": "Garantia",
+                                    "label": "Garantía"
+                                }
+                            ],
+                            "type": "field"
+                        },
+                        {
+                            "type": "title",
+                            "label": {
+                                "text": "* Si solicita repuestos, Elegir en Orden Adicional \"NO\""
+                            },
+                            "visible": true
+                        }
+                    ]
+                },
+                {
+                    "label": "Conformes",
+                    "icon": "fa fa-check",
+                    "content": [
+                        {
+                            "name": "CommentTech",
+                            "readonly": false,
+                            "label": {
+                                "text": "Observaciones"
+                            },
+                            "editor": "memo",
+                            "type": "field"
+                        },
+                        {
+                            "name": "Recommendations",
+                            "readonly": false,
+                            "label": {
+                                "text": "Recomendaciones"
+                            },
+                            "editor": "memo",
+                            "type": "field"
+                        },
+                        {
+                            "name": "MachineOperative",
+                            "required": true,
+                            "editor": "combobox",
+                            "label": {
+                                "text": "Equipo Funcionando"
+                            },
+                            "options": [
+                                {
+                                    "value": "",
+                                    "label": ""
+                                },
+                                {
+                                    "value": "No",
+                                    "label": "No"
+                                },
+                                {
+                                    "value": "Si",
+                                    "label": "Si"
+                                }
+                            ],
+                            "type": "field"
+                        },
+                        {
+                            "name": "ConformesTec",
+                            "type": "title",
+                            "label": "Conformidad Técnico",
+                            "description": ""
+                        },
+                        {
+                            "name": "TechName",
+                            "editor": "string",
+                            "label": {
+                                "text": "Nombre del Tecnico"
+                            },
+                            "readonly": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "FirmaTec",
+                            "editor": "signature",
+                            "required": true,
+                            "label": {
+                                "text": "Firma del Tecnico"
+                            },
+                            "description": "",
+                            "config": {
+                                "attach": true
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "Conformes",
+                            "type": "title",
+                            "label": "Conformidad Cliente",
+                            "description": ""
+                        },
+                        {
+                            "name": "RespName",
+                            "readonly": false,
+                            "required": true,
+                            "label": {
+                                "text": "Nombre Responsable"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "RespMail",
+                            "readonly": false,
+                            "required": true,
+                            "label": {
+                                "text": "Email Responsable"
+                            },
+                            "editor": "string",
+                            "type": "field"
+                        },
+                        {
+                            "name": "FirmaCliente",
+                            "editor": "signature",
+                            "required": true,
+                            "label": {
+                                "text": "Firma del Cliente"
+                            },
+                            "description": "",
+                            "config": {
+                                "attach": true
+                            },
+                            "type": "field"
+                        }
+                    ],
+                    "type": "steps_page"
+                }
+            ]
+        }
+    ],
+    "methods": {
+        "verifyARDF": "async () => {this.rec.CheckARDF = false; this.rec.CheckARDF = (this.rec.CheckRodilloAlimentacion && this.rec.CheckSensoresOriginal) ;}",
+        "verifyOpticos": "async () => {this.rec.CheckOpticos = true; this.rec.CheckOpticos = (this.rec.CheckCristalExposicion && this.rec.CheckGuiasRieles) ;}",
+        "verifyUnidadImagen": "async () => {this.rec.CheckUnidadImagen = false;  this.rec.CheckUnidadImagen = (this.rec.CheckCilindro && this.rec.CheckRodilloCarga && this.rec.CheckLaminaCepillo && this.rec.CheckSensores); }",
+        "verifyUnidadRevelado": "async () => {this.rec.CheckUnidadRevelado = (this.rec.CheckGuiasPinones); }",
+        "verifyUnidadTransferencia": "async (rec) => {this.rec.CheckUnidadTransferencia = (this.rec.CheckBandaTransferencia && this.rec.CheckLaminaLimpieza && this.rec.CheckUnidadToner && this.rec.CheckTolvaToner && this.rec.CheckCristalProteccion) }",
+        "verifyRecorridoPapel": "async () => {this.rec.CheckRecorridoPapel = (this.rec.CheckRodilloAlimentacionPapel && this.rec.CheckSensoresPapel) }",
+        "verifyUnidadFusion": "async () => {this.rec.CheckUnidadFusion = (this.rec.CheckRodilloCalorPresion && this.rec.CheckTermistoresSensores) }",
+        "verifyUnidadDuplex": "async () => {this.rec.CheckUnidadDuplex = (this.rec.CheckRodillosAlimentacionDuplex && this.rec.CheckSensoresDuplex && this.rec.CheckChequeoSps) }",
+        "verifySensoresDuplex": "async () => {this.rec.CheckLimpiezaExterior = (this.rec.CheckTestChart2) }",
+        "afterShowRecord": "async (rec) => {if (!rec.TransTimeIni) rec.TransTimeIni = moment().format('HH:mm:ss')}",
+        "beforeSaveRecord": "async (draft, rec) => {rec.TransTimeFin = moment().format('HH:mm:ss'); rec.TechVisitDate = moment().format('YYYY-MM-DD'); return true}",
+        "pasteArtCode": "async (row) => { let item = await cm.Item.bring(row.ArtCode);if(item) { row.ArtName = item.Name} ; item = 0 ; item = await cm.Item.bring(row.CodProducto);if(item) { row.NameProducto = item.Name}} "
+    },
+    "successHtml": "<div><p>Muchas Gracias!</p> <br> <div><a href='#/activity/' class='button is-link'>Volver</a> <br> <a href='#/activity/' class='button is-primary'>Nuevo</a></div></div> "
+}

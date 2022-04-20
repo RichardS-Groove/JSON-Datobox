@@ -154,6 +154,26 @@
             "label": "Sales Order"
         },
         {
+            "name": "Upstream",
+            "editor": "checkbox",
+            "label": {
+                "text": "Aguas Arriba"
+            },
+            "visible": "!rec.Downstream",
+            "required": "!rec.Upstream && !rec.Downstream",
+            "type": "field"
+        },
+        {
+            "name": "Downstream",
+            "editor": "checkbox",
+            "label": {
+                "text": "Aguas Abajo"
+            },
+            "visible": "!rec.Upstream",
+            "required": "!rec.Downstream && !rec.Upstream",
+            "type": "field"
+        },
+        {
             "name": "CustCode",
             "visible": false,
             "editor": "string",
@@ -187,7 +207,7 @@
                 "pastefield": "Name"
             },
             "required": true,
-            "afterEdit": "rec.CustCode = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Code ; rec.PayTerm = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].PayTerm ; rec.Currency = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Currency ;  rec.PriceDeal = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].PriceDeal",
+            "afterEdit": "rec.CustCode = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Code ; rec.PayTerm = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].PayTerm ; rec.Currency = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].Currency ;  rec.PriceDeal = (await cm.Customer.getAll()).filter((r) => r.Name === val)[0].PriceDeal;  rec.CurrencyRate = 1; rec.BaseRate = 1 ",
             "type": "field"
         },
         {
@@ -462,7 +482,7 @@
                 ],
                 "pastefield": "Name"
             },
-            "afterEdit": "rec.Barges = (await cm.Barges.getAll()).filter((r) => r.Name === val)[0].Code; if(!rec.SetBarges){rec.SetBarges = rec.Barges} else{rec.SetBarges += ',' + rec.Barges}; ++rec.Number; rec.Barges = null ; rec.NameBarges = null",
+            "afterEdit": "rec.Barges = (await cm.Barges.getAll()).filter((r) => r.Name === val)[0].Code; if(!rec.SetBarges){rec.SetBarges = rec.Barges} else{rec.SetBarges += ',' + rec.Barges}; ++rec.SetBargesCount; rec.Barges = null ; rec.NameBarges = null",
             "type": "field"
         },
         {
@@ -476,7 +496,7 @@
             "type": "field"
         },
         {
-            "name": "Number",
+            "name": "SetBargesCount",
             "editor": "integer",
             "label": {
                 "text": "Número"
@@ -624,6 +644,10 @@
             "type": "field"
         },
         {
+            "type": "title",
+            "visible": "rec.WithSerene"
+        },
+        {
             "name": "WithSerene",
             "editor": "checkbox",
             "label": {
@@ -632,12 +656,104 @@
             "type": "field"
         },
         {
+            "name": "SereneDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Sereno"
+            },
+            "visible": "rec.WithSerene",
+            "required": "rec.WithSerene",
+            "type": "field"
+        },
+        {
+            "name": "SereneTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora Sereno"
+            },
+            "visible": "rec.WithSerene",
+            "required": "rec.WithSerene",
+            "type": "field"
+        },
+        {
+            "name": "SereneDateFinal",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Fin Sereno"
+            },
+            "visible": "rec.WithSerene",
+            "required": "rec.WithSerene",
+            "type": "field"
+        },
+        {
+            "name": "SereneTimeFinal",
+            "editor": "time",
+            "label": {
+                "text": "Hora Fin Sereno"
+            },
+            "visible": "rec.WithSerene",
+            "required": "rec.WithSerene",
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "visible": "rec.WithSerene"
+        },
+        {
+            "type": "title",
+            "visible": "rec.WithTrailer"
+        },
+        {
             "name": "WithTrailer",
             "editor": "checkbox",
             "label": {
                 "text": "Con Remolcador"
             },
             "type": "field"
+        },
+        {
+            "name": "TrailerDate",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Remolcador"
+            },
+            "visible": "rec.WithTrailer",
+            "required": "rec.WithTrailer",
+            "type": "field"
+        },
+        {
+            "name": "TrailerTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora Remolcador"
+            },
+            "visible": "rec.WithTrailer",
+            "required": "rec.WithTrailer",
+            "type": "field"
+        },
+        {
+            "name": "TrailerDateFinal",
+            "editor": "date",
+            "label": {
+                "text": "Fecha Fin Remolcador"
+            },
+            "visible": "rec.WithTrailer",
+            "required": "rec.WithTrailer",
+            "type": "field"
+        },
+        {
+            "name": "TrailerTimeFinal",
+            "editor": "time",
+            "label": {
+                "text": "Hora Fin Remolcador"
+            },
+            "visible": "rec.WithTrailer",
+            "required": "rec.WithTrailer",
+            "type": "field"
+        },
+        {
+            "type": "title",
+            "visible": "rec.WithTrailer"
         },
         {
             "name": "Items",
@@ -738,15 +854,21 @@
             "type": "field"
         },
         {
+            "name": "ReturnDatobox",
+            "editor": "checkbox",
+            "label": {
+                "text": "Devolución"
+            },
+            "visible": false,
+            "type": "field"
+        },
+        {
             "type": "title"
         }
     ],
     "methods": {
-        "sumUpRow": "async () => {console.log('Ingreso al sumUpRow'); this.rec.Total = 0; for (let row of this.rec.Items) {this.rec.Total += parseInt(row.RowTotal || 0 )}; this.rec.SubTotal = this.rec.Total}",
-        "updatePrice": "async (row, rec) => {console.log('asd') ; let prices = await cm.Price.getPrice(row.ArtCode, 1, rec.PriceDeal, moment()); row.VATPrice = prices[0]; row.Price = prices[0]; row.RowTotal = Math.round(row.Qty * row.Price); await this.sumUpRow(row)}",
-
         "afterShowRecord": "async (rec) => {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm ; rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD') ; }",
-        "beforeSaveRecord": "async (draft, rec) => {if(!rec.DxDivision && !rec.DxTransit && !rec.WithSerene && !rec.WithTrailer){return draft || rec.Items.length? true : 'Completar la sección de Selección'}; if(!rec.PayTerm) {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm} ; if(!rec.Currency) {rec.Currency = (await cm.SalesSettings.getAll())[0].DefaultCurrency} ; rec.CurrencyRate = 1; rec.BaseRate = 1 ; rec.DeliveryDate = moment().format('YYYY-MM-DD'); if(rec.DxDivision) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00253'; row.Name = 'Servicio de amarre por barcaza'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.DxTransit) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00255'; row.Name = 'Transito'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithSerene) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00257'; row.Name = 'Sereno'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.WithTrailer) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00251'; row.Name = 'Remolcador de custodia'; row.Qty = 1 ; row.Unit = 'HORA' ; await updatePrice(row, rec) ; row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ; rec.Items.push(row)}; if(rec.SetBarges && rec.Number) {let row = cm.SalesOrderItemRow.new(); row['ArtCode'] = '00253'; row.Name = 'Servicio de amarre por barcaza'; row.Qty = rec.Number ; row.Unit = 'HORA' ; await updatePrice(row, rec);  row.Price = row.VATPrice ; row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.VATPrice ;rec.Items.push(row)} ; await sumUpRow() ; return true}"
+        "beforeSaveRecord": "async (draft, rec) => {if(!rec.DxDivision && !rec.DxTransit && !rec.WithSerene && !rec.WithTrailer){return draft || rec.Items.length? true : 'Completar la sección de Selección'}; if(!rec.PayTerm) {rec.PayTerm = (await cm.SalesSettings.getAll())[0].DefaultPayTerm}; rec.ReturnDatobox = true ;return true}"
     },
     "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/form/' class='button is-link'>Volver</a> <a href='#/form/SatisfactionPoll/' class='button is-primary'>Nuevo</a></div></div>"
 }
