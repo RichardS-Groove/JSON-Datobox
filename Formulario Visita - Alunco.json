@@ -1,0 +1,528 @@
+{
+    "name": "Visita",
+    "fullScreen": false,
+    "dateField": "Date",
+    "timeField": "TransTime",
+    "dashboard": false,
+    "new_button": false,
+    "syncDays": 1,
+    "icon": "fa-clipboard-list",
+    "bgcolor": "",
+    "textColor": "",
+    "location": {
+        "field": "Location",
+        "attachMap": true
+    },
+    "dependencies": [
+        "PriceDeal",
+        "PriceList",
+        "Price"
+    ],
+    "recordname": "Visit",
+    "actions": [
+        "post",
+        "put",
+        "get"
+    ],
+    "fields": [
+        {
+            "name": "Office",
+            "editor": "string",
+            "label": {
+                "text": "Office"
+            },
+            "default": "dev.fields.Office",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Computer",
+            "editor": "string",
+            "label": {
+                "text": "Computer"
+            },
+            "default": "dev.fields.Computer",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Department",
+            "editor": "string",
+            "label": {
+                "text": "Department"
+            },
+            "default": "dev.fields.Department",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "Shift",
+            "editor": "string",
+            "label": {
+                "text": "Turno"
+            },
+            "visible": false,
+            "default": "dev.fields.Shift",
+            "type": "field"
+        },
+        {
+            "name": "Location",
+            "editor": "location",
+            "visible": false,
+            "type": "field",
+            "label": {
+                "text": "Location"
+            }
+        },
+        {
+            "name": "TransTime",
+            "editor": "time",
+            "label": {
+                "text": "Hora de Transacción"
+            },
+            "visible": false,
+            "default": "moment().format('HH:mm:ss')",
+            "type": "field"
+        },
+        {
+            "name": "User",
+            "editor": "string",
+            "label": {
+                "text": "User"
+            },
+            "default": "dev.fields.User",
+            "visible": false,
+            "type": "field"
+        },
+        {
+            "name": "UserNameDatobox",
+            "editor": "string",
+            "label": {
+                "text": "Usuario Datobox"
+            },
+            "visible": false,
+            "default": "(await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Name",
+            "linkto": "User",
+            "readonly": "true",
+            "type": "field"
+        },
+        {
+            "type": "steps",
+            "content": [
+                {
+                    "label": "Datos del Cliente",
+                    "icon": "fa fa-user",
+                    "content": [
+                        {
+                            "type": "title",
+                            "label": "Visita"
+                        },
+                        {
+                            "name": "ExternalId",
+                            "editor": "string",
+                            "label": {
+                                "text": "ExternalId"
+                            },
+                            "visible": false,
+                            "type": "field"
+                        },
+                        {
+                            "type": "button",
+                            "label": {
+                                "text": "Dirección del cliente"
+                            },
+                            "isLocation": true,
+                            "click": "window.open('http://maps.google.com/maps?q='+ rec.fields.Location.coords.latitude + ',' + rec.fields.Location.coords.longitude)",
+                            "visible": true
+                        },
+                        {
+                            "name": "ExternalUser",
+                            "editor": "string",
+                            "label": {
+                                "text": "ExternalUser"
+                            },
+                            "visible": false,
+                            "readonly": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "Address",
+                            "editor": "string",
+                            "label": {
+                                "text": "Dirección del Cliente"
+                            },
+                            "readonly": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "Date",
+                            "editor": "date",
+                            "label": {
+                                "text": "Fecha Origen"
+                            },
+                            "visible": true,
+                            "readonly": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "TransDate",
+                            "editor": "date",
+                            "label": {
+                                "text": "Fecha de Transacción"
+                            },
+                            "visible": true,
+                            "default": "moment().format('YYYY-MM-DD')",
+                            "afterEdit": "rec.Currency = 'ARS'; rec.ExternalUser = (await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Com1; rec.User = dev.fields.User",
+                            "type": "field"
+                        },
+                        {
+                            "name": "CustCode",
+                            "editor": "string",
+                            "linkto": "Customer",
+                            "label": {
+                                "text": "Código Cliente"
+                            },
+                            "readonly": true,
+                            "pasteview": {
+                                "columns": [
+                                    "Code",
+                                    "Name"
+                                ],
+                                "pastefield": "Code"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "CustName",
+                            "editor": "string",
+                            "label": {
+                                "text": "Nombre Cliente"
+                            },
+                            "readonly": true,
+                            "type": "field"
+                        },
+                        {
+                            "name": "WayBill",
+                            "editor": "string",
+                            "readonly": false,
+                            "label": {
+                                "text": "Hoja de Ruta"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "Currency",
+                            "editor": "string",
+                            "label": {
+                                "text": "Moneda"
+                            },
+                            "linkto": "Currency",
+                            "pasteview": {
+                                "columns": [
+                                    "Code",
+                                    "Name"
+                                ],
+                                "pastefield": "Code"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "Observation",
+                            "editor": "memo",
+                            "label": {
+                                "text": "Observación"
+                            },
+                            "type": "field"
+                        }
+                    ],
+                    "type": "steps_page"
+                },
+                {
+                    "label": "Artículos a Entregar",
+                    "icon": "fa fa-check",
+                    "content": [
+                        {
+                            "type": "title",
+                            "label": "Artículos a Entregar",
+                            "description": ""
+                        },
+                        {
+                            "name": "ItemsToCustomer",
+                            "editor": "detail",
+                            "required": true,
+                            "mobile": true,
+                            "label": {
+                                "text": "Artículos a Entregar"
+                            },
+                            "canInsertRow": true,
+                            "fields": [
+                                {
+                                    "name": "ArtCode",
+                                    "editor": "string",
+                                    "linkto": "Item",
+                                    "label": {
+                                        "text": "Artículo"
+                                    },
+                                    "pasteview": {
+                                        "columns": [
+                                            "Code",
+                                            "Name"
+                                        ],
+                                        "filter": "(r) => {return  (r.DTBX == true) }",
+                                        "pastefield": "Code"
+                                    },
+                                    "afterEdit": "i = await cm.Item.bring(val); row.Name = i.Name; await pasteArtCode(row) ; await sumUp(); rowSumUp(row) ",
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Name",
+                                    "editor": "string",
+                                    "label": {
+                                        "text": "Nombre del Artículo"
+                                    },
+                                    "readonly": true,
+                                    "weight": 3,
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Qty",
+                                    "editor": "value",
+                                    "label": {
+                                        "text": "Cantidad"
+                                    },
+                                    "weight": 1,
+                                    "afterEdit": "await rowSumUp(row);",
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Price",
+                                    "editor": "value",
+                                    "afterEdit": "await rowSumUp(row)",
+                                    "required": true,
+                                    "readonly": true,
+                                    "label": {
+                                        "text": "Precio"
+                                    },
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "RowTotal",
+                                    "visible": false,
+                                    "readonly": true,
+                                    "label": {
+                                        "text": "Total"
+                                    },
+                                    "editor": "value",
+                                    "type": "field"
+                                }
+                            ],
+                            "type": "field"
+                        },
+                        {
+                            "name": "TotalQty",
+                            "editor": "value",
+                            "readonly": true,
+                            "label": {
+                                "text": "Cantidad de Artículos"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "TotalPrice",
+                            "editor": "value",
+                            "readonly": true,
+                            "label": {
+                                "text": "Cantidad total a Pagar"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "DeliveryNr",
+                            "editor": "integer",
+                            "label": {
+                                "text": "Nros de Entrega"
+                            },
+                            "type": "field"
+                        }
+                    ],
+                    "type": "steps_page"
+                },
+                {
+                    "label": "Artículos a Retirar",
+                    "icon": "fa fa-check",
+                    "content": [
+                        {
+                            "type": "title",
+                            "label": "Artículos a Retirar",
+                            "description": ""
+                        },
+                        {
+                            "name": "ItemsFromCustomer",
+                            "editor": "detail",
+                            "required": true,
+                            "mobile": true,
+                            "label": {
+                                "text": "Artículos a Retirar"
+                            },
+                            "canInsertRow": true,
+                            "fields": [
+                                {
+                                    "name": "ArtCode",
+                                    "editor": "string",
+                                    "label": {
+                                        "text": "Artículo"
+                                    },
+                                    "linkto": "Item",
+                                    "pasteview": {
+                                        "columns": [
+                                            "Code",
+                                            "Name"
+                                        ],
+                                        "filter": "(r) => {return  (r.DTBX == true) }",
+                                        "pastefield": "Code"
+                                    },
+                                    "afterEdit": "i = await cm.Item.bring(val); row.Name = i.Name; await sumUp(); rowSumUp(row) ",
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Name",
+                                    "editor": "string",
+                                    "label": {
+                                        "text": "Nombre del Artículo"
+                                    },
+                                    "readonly": true,
+                                    "weight": 3,
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Qty",
+                                    "editor": "value",
+                                    "label": {
+                                        "text": "Cantidad"
+                                    },
+                                    "type": "field"
+                                }
+                            ],
+                            "type": "field"
+                        }
+                    ],
+                    "type": "steps_page"
+                },
+                {
+                    "label": "Cobranza",
+                    "icon": "fa fa-check",
+                    "content": [
+                        {
+                            "type": "title",
+                            "label": "Cobranza",
+                            "description": ""
+                        },
+                        {
+                            "name": "PayModes",
+                            "editor": "detail",
+                            "mobile": true,
+                            "required": true,
+                            "label": {
+                                "text": "Cobranza"
+                            },
+                            "canInsertRow": true,
+                            "fields": [
+                                {
+                                    "name": "PayMode",
+                                    "editor": "string",
+                                    "default": "'EFARS'",
+                                    "label": {
+                                        "text": "Medio de Cobro"
+                                    },
+                                    "linkto": "PayMode",
+                                    "pasteview": {
+                                        "columns": [
+                                            "Code",
+                                            "Comment"
+                                        ],
+                                        "pastefield": "Code"
+                                    },
+                                    "afterEdit": "i = await cm.PayMode.bring(val); row.Name = i.Comment",
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Name",
+                                    "editor": "string",
+                                    "label": {
+                                        "text": "Forma de Pago"
+                                    },
+                                    "weight": 3,
+                                    "readonly": true,
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "Paid",
+                                    "editor": "value",
+                                    "label": {
+                                        "text": "Pagado"
+                                    },
+                                    "type": "field"
+                                },
+                                {
+                                    "name": "ChequeComment",
+                                    "editor": "string",
+                                    "label": {
+                                        "text": "Comentario"
+                                    },
+                                    "type": "field"
+                                }
+                            ],
+                            "type": "field"
+                        },
+                        {
+                            "name": "TotalPrice",
+                            "editor": "value",
+                            "readonly": true,
+                            "label": {
+                                "text": "Total a Cobrar"
+                            },
+                            "type": "field"
+                        },
+                        {
+                            "name": "RefStr",
+                            "editor": "string",
+                            "label": {
+                                "text": "Referencia"
+                            },
+                            "type": "field"
+                        }
+                    ],
+                    "type": "steps_page"
+                }
+            ]
+        }
+    ],
+    "reports": [
+        {
+            "label": "Reporte Visit",
+            "name": "Reporte Visit",
+            "filter": "async (rec) => {return rec.User == app.device.User  && (moment(rec.Date).isSame(moment(), 'month') || moment(rec.Date).isSame(moment().add(-1, 'month'), 'month')) } ",
+            "columns": [
+                {
+                    "field": "Date",
+                    "label": "Fecha de Visita"
+                },
+                {
+                    "field": "SerNr",
+                    "label": "SerNr",
+                    "click": "oppen.openWindow('VisitWindow', val)"
+                }
+            ]
+        }
+    ],
+    "methods": {
+        "rowSumUp": "async (row) => { row.RowTotal = Math.round(row.Qty * row.Price) ; row.RowNet = row.Qty * row.Price ;await this.sumQtyTotal() ; await this.sumUp()}",
+        "sumUp": "async () => {let total = 0 ; total = this.rec.ItemsToCustomer.map( i => i.Qty * i.Price) ; this.rec.Total = total.reduce((a, b) => a + b, 0); this.rec.TotalQty = parseInt(this.rec.ItemsToCustomer.map(r => parseInt(r.Qty)).reduce( (a,b) => a + b , 0))} ",
+        "sumQtyTotal": "async () => {this.rec.TotalQty = 0 ; this.rec.ItemsToCustomer.forEach(r => this.rec.TotalQty += parseInt(r.Qty)); this.rec.TotalPrice = 0; this.rec.ItemsToCustomer.forEach(r => this.rec.TotalPrice += parseInt(r.RowTotal))} ",
+        "pasteArtCode": "async (row) => {await this.updatePrice(row, this.rec); await this.rowSumUp(row)}",
+        "getPriceDeal": "async (custcode) => {let customer = await cm.Customer.bring(custcode); return customer ? customer.PriceDeal : null}",
+        "updatePrice": "async (row, rec) => {row.Price = (await cm.Price.getPrice(row.ArtCode, 1, await this.getPriceDeal(rec.CustCode), moment()))[0];}",
+        "afterShowRecord": "async (rec) => {rec.TransDate = moment().format('YYYY-MM-DD');rec.Currency = 'ARS'; rec.ExternalUser = (await cm.User.getAll()).filter(u => u.Code === dev.fields.User)[0].Com1; rec.User = dev.fields.User; let us = await cm.User.bring(app.deviceCode) ; rec.UserNameDatobox = us.Name ; rec.ExternalId = us.Com1}"
+    },
+    "successHtml": "<div><p>Muchas Gracias!</p> <div><a href='#/activity/' class='button is-link'>Actividades</a>"
+}
